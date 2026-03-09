@@ -60,6 +60,8 @@ export const projects: Project[] = [
       "/assets/proyect-img/turnar/screenshot-1.png",
       "/assets/proyect-img/turnar/screenshot-2.png",
       "/assets/proyect-img/turnar/screenshot-3.png",
+      "/assets/proyect-img/turnar/screenshot-4.png",
+      "/assets/proyect-img/turnar/thumbnail.png",
     ],
     thumbnail: "/assets/proyect-img/turnar/thumbnail.png",
     github: "",

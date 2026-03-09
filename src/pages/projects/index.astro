@@ -1,0 +1,218 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/ui/Navbar.astro";
+import Footer from "../../components/ui/Footer.astro";
+import { useTranslations } from "../../i18n/utils";
+import { projects } from "../../data/projects";
+import type { Language } from "../../i18n/utils";
+
+const lang: Language = "es";
+const { t } = await useTranslations(lang);
+
+const gradients = [
+  { from: "#c8db87", to: "#53b598" },
+  { from: "#53b598", to: "#6abda0" },
+  { from: "#6abda0", to: "#8eca91" },
+  { from: "#8eca91", to: "#c8db87" },
+  { from: "#53b598", to: "#c8db87" },
+  { from: "#c8db87", to: "#6abda0" },
+];
+---
+
+<Layout
+  title="Proyectos — Luciano Romero"
+  description="Explora los proyectos de software desarrollados por Luciano Romero: apps web, APIs, librerias y mas."
+  lang={lang}
+>
+  <Navbar lang={lang} currentPath="/projects" />
+
+  <main class="min-h-screen bg-surface-light dark:bg-surface-dark pt-24 pb-20">
+
+    <!-- Page header -->
+    <section class="relative py-20 overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950">
+      <div
+        class="absolute -top-20 -right-20 w-96 h-96 rounded-full opacity-10 pointer-events-none"
+        style="background: radial-gradient(circle, #53b598, transparent);"
+        data-parallax="0.1"
+      ></div>
+      <div
+        class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full opacity-10 pointer-events-none"
+        style="background: radial-gradient(circle, #c8db87, transparent);"
+        data-parallax="-0.08"
+      ></div>
+      <div
+        class="absolute inset-0 opacity-[0.03]"
+        style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px;"
+      ></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-brand-teal font-semibold text-sm tracking-widest uppercase mb-3" data-i18n="projects.subtitle">
+          {t("projects.subtitle")}
+        </p>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6">
+          <span data-i18n="projects.title">{t("projects.title")}</span>
+        </h1>
+        <p class="text-slate-400 text-lg max-w-xl mx-auto">
+          {projects.length} proyectos - open source, APIs, herramientas y apps web
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects grid -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {projects.map((project, idx) => {
+          const g = gradients[idx % gradients.length];
+          const thumb = project.thumbnail || (project.images && project.images[0]) || "";
+          return (
+            <article
+              class={`card-proj reveal group relative overflow-hidden rounded-2xl cursor-pointer delay-${(idx % 3) * 100}`}
+              style="aspect-ratio: 4/5;"
+              role="link"
+              tabindex="0"
+              aria-label={`Ver ${project.title}`}
+              onclick={`window.location.href='/projects/${project.slug}'`}
+              onkeydown={`if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='/projects/${project.slug}'; }`}
+            >
+              <!-- Image fill -->
+              <div
+                class="absolute inset-0"
+                style={`background: linear-gradient(135deg, ${g.from}cc, ${g.to}cc);`}
+              ></div>
+              {thumb && (
+                <img
+                  src={thumb}
+                  alt={project.title}
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  onload="this.style.opacity='1'"
+                  onerror="this.style.display='none'"
+                />
+              )}
+
+              <!-- Bottom gradient vignette (always visible) -->
+              <div
+                class="absolute inset-0 pointer-events-none"
+                style="background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 40%, rgba(0,0,0,0.05) 70%, transparent 100%);"
+              ></div>
+
+              <!-- Top gradient (subtle, for badges legibility) -->
+              <div
+                class="absolute inset-0 pointer-events-none"
+                style="background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 35%);"
+              ></div>
+
+              <!-- Top badges -->
+              <div class="absolute top-4 left-4 right-4 flex items-start justify-between z-10">
+                {project.featured ? (
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10.5px] font-bold bg-brand-lime/90 text-slate-900">
+                    ★ Destacado
+                  </span>
+                ) : <span></span>}
+                <span class="px-2.5 py-1 text-[10.5px] font-bold rounded-full backdrop-blur-sm bg-black/30 text-white border border-white/15">
+                  {project.technologies[0]}
+                </span>
+              </div>
+
+              <!-- Index number watermark -->
+              <div
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[120px] font-black leading-none select-none pointer-events-none transition-opacity duration-500 group-hover:opacity-0"
+                style={`color: rgba(255,255,255,0.07); letter-spacing: -0.06em;`}
+              >
+                {String(idx + 1).padStart(2, "0")}
+              </div>
+
+              <!-- Bottom content -->
+              <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+
+                <!-- Description (hidden → slides in on hover) -->
+                <div class="card-desc overflow-hidden" style="max-height: 0; transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1);">
+                  <p class="text-[12.5px] text-white/65 leading-relaxed mb-3 line-clamp-2">
+                    {project.shortDescription}
+                  </p>
+                </div>
+
+                <!-- Title -->
+                <h2 class="text-[17px] font-extrabold text-white leading-snug tracking-tight mb-3">
+                  {project.title}
+                </h2>
+
+                <!-- Tech pills + CTA -->
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex flex-wrap gap-1.5 min-w-0">
+                    {project.technologies.slice(0, 3).map((tech) => (
+                      <span class="px-2 py-0.5 rounded-md text-[10.5px] font-semibold backdrop-blur-sm bg-white/10 text-white/80 border border-white/15">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 3 && (
+                      <span class="px-2 py-0.5 rounded-md text-[10.5px] font-semibold text-white/50">
+                        +{project.technologies.length - 3}
+                      </span>
+                    )}
+                  </div>
+
+                  <!-- CTA arrow -->
+                  <a
+                    href={`/projects/${project.slug}`}
+                    class="shrink-0 h-9 px-3 rounded-full inline-flex items-center gap-1.5 transition-all duration-300 bg-white/10 border border-white/20 hover:bg-white hover:border-white text-white hover:text-slate-900"
+                    aria-label={`Ver ${project.title}`}
+                  >
+                    <span class="text-[11px] font-bold" data-i18n="projects.viewProject">{t("projects.viewProject")}</span>
+                    <svg class="w-4 h-4 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                  </a>
+                </div>
+
+                <!-- GitHub + LiveDemo links (reveal on hover) -->
+                <div class="card-links overflow-hidden flex items-center gap-3 mt-3" style="max-height: 0; opacity: 0; transition: max-height 0.35s ease, opacity 0.3s ease 0.05s;">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/60 hover:text-white transition-colors"
+                      aria-label="GitHub"
+                      onclick="event.stopPropagation()"
+                    >
+                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+                      </svg>
+                      GitHub
+                    </a>
+                  )}
+                  {project.liveDemo && (
+                    <a
+                      href={project.liveDemo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/60 hover:text-white transition-colors"
+                      onclick="event.stopPropagation()"
+                    >
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                      </svg>
+                      Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+
+  <Footer lang={lang} />
+</Layout>
+
+<style>
+  .card-proj:hover .card-desc {
+    max-height: 5rem;
+  }
+  .card-proj:hover .card-links {
+    max-height: 2.5rem;
+    opacity: 1;
+  }
+</style>

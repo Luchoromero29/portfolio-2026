@@ -1,0 +1,214 @@
+---
+import "../styles/global.css";
+import type { Language } from "../i18n/utils";
+import enTranslations from "../i18n/en.json";
+import esTranslations from "../i18n/es.json";
+
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  lang?: Language;
+}
+
+const {
+  title,
+  description = "Portfolio of Luciano Romero, Software Engineer.",
+  ogImage = "/og-image.jpg",
+  lang = "es",
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://lucianoromero.dev");
+
+const translations = { en: enTranslations, es: esTranslations };
+---
+
+<!doctype html>
+<html lang={lang} class="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Dark mode init: runs synchronously before paint to prevent FOUC -->
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (stored === "dark" || (!stored && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+
+  <body
+    class="bg-surface-light dark:bg-surface-dark text-slate-800 dark:text-slate-200 font-sans transition-colors duration-300"
+  >
+    <slot />
+
+    <!-- Pass translation data to the bundled i18n script -->
+    <script is:inline define:vars={{ translationsData: translations, defaultLang: lang }}>
+      window.__PORTFOLIO_TRANSLATIONS__ = translationsData;
+      window.__DEFAULT_LANG__ = defaultLang;
+    </script>
+
+    <!-- i18n runtime — bundled by Vite, can import npm packages -->
+    <script>
+      import i18next, { type InitOptions } from "i18next";
+
+      type Lang = "en" | "es";
+      type TranslationMap = Record<Lang, Record<string, unknown>>;
+      type AppWindow = Window &
+        typeof globalThis & {
+          __PORTFOLIO_TRANSLATIONS__: TranslationMap;
+          __DEFAULT_LANG__: Lang;
+          __currentLang: Lang;
+          __i18next: typeof i18next;
+          toggleLanguage: () => Promise<void>;
+        };
+
+      async function initI18n() {
+        const appWindow = window as unknown as AppWindow;
+        const translationsData = appWindow.__PORTFOLIO_TRANSLATIONS__;
+        const defaultLang: Lang = appWindow.__DEFAULT_LANG__ || "es";
+        const stored = localStorage.getItem("lang");
+        const storedLang: Lang = stored === "en" || stored === "es" ? stored : defaultLang;
+
+        const options: InitOptions = {
+          lng: storedLang,
+          resources: {
+            en: { translation: translationsData.en },
+            es: { translation: translationsData.es },
+          },
+          fallbackLng: "es",
+          interpolation: { escapeValue: false },
+        };
+
+        await i18next.init(options);
+
+        appWindow.__currentLang = storedLang;
+        appWindow.__i18next = i18next;
+
+        applyTranslations();
+
+        appWindow.toggleLanguage = async function () {
+          const current = appWindow.__currentLang;
+          const newLang = current === "en" ? "es" : "en";
+          await i18next.changeLanguage(newLang);
+          localStorage.setItem("lang", newLang);
+          appWindow.__currentLang = newLang;
+          document.documentElement.lang = newLang;
+          applyTranslations();
+          // Keep the toggle label itself updated
+          const btn = document.getElementById("lang-toggle");
+          if (btn) btn.textContent = i18next.t("nav.toggleLang");
+        };
+      }
+
+      function applyTranslations() {
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (!key) return;
+          const attr = el.getAttribute("data-i18n-attr");
+          const translated = i18next.t(key);
+          if (attr) {
+            (el as Element).setAttribute(attr, translated);
+          } else {
+            el.textContent = translated;
+          }
+        });
+      }
+
+      initI18n();
+    </script>
+
+    <!-- Scroll reveal -->
+    <script is:inline>
+      (function () {
+        const observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+        );
+
+        function observeRevealElements() {
+          document.querySelectorAll(".reveal, .reveal-left, .reveal-right").forEach(function (el) {
+            observer.observe(el);
+          });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", observeRevealElements);
+        } else {
+          observeRevealElements();
+        }
+      })();
+    </script>
+
+    <!-- Parallax on scroll -->
+    <script is:inline>
+      (function () {
+        var ticking = false;
+
+        function applyParallax() {
+          var scrollY = window.scrollY;
+          document.querySelectorAll("[data-parallax]").forEach(function (el) {
+            var speed = parseFloat(el.getAttribute("data-parallax") || "0.25");
+            el.style.transform = "translateY(" + scrollY * speed + "px)";
+          });
+          ticking = false;
+        }
+
+        window.addEventListener(
+          "scroll",
+          function () {
+            if (!ticking) {
+              requestAnimationFrame(applyParallax);
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
+      })();
+    </script>
+  </body>
+</html>

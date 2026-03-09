@@ -1,0 +1,165 @@
+---
+import type { Language } from "../../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const { t } = await useTranslations(lang);
+
+interface Skill {
+  name: string;
+  // icon: string;
+}
+
+interface SkillCategory {
+  key: string;
+  title: string;
+  iconBg: string;
+  iconText: string;
+  iconLabel: string;
+  skills: Skill[];
+}
+
+interface Skill {
+  name: string;
+}
+
+interface SkillCategory {
+  key: string;
+  title: string;
+  iconBg: string;
+  iconText: string;
+  iconLabel: string;
+  skills: Skill[];
+}
+
+const skillCategories: SkillCategory[] = [
+  {
+    key: "backend",
+    title: t("skills.backend"),
+    iconBg: "from-green-500/20 to-emerald-600/10",
+    iconText: "text-green-600 dark:text-green-400",
+    iconLabel: "⚙",
+    skills: [
+      { name: "Node.js" },
+      { name: "Java" },
+      { name: "Spring Boot" },
+      { name: "Sequelize" },
+      { name: "REST APIs" },
+    ],
+  },
+  {
+    key: "frontend",
+    title: t("skills.frontend"),
+    iconBg: "from-violet-500/20 to-purple-600/10",
+    iconText: "text-violet-600 dark:text-violet-400",
+    iconLabel: "◈",
+    skills: [
+      { name: "React" },
+      { name: "React Native" },
+      { name: "Next.js" },
+      { name: "Astro" },
+      { name: "Tailwind CSS" },
+      { name: "JavaScript" },
+      { name: "TypeScript" },
+    ],
+  },
+  {
+    key: "databases",
+    title: t("skills.databases"),
+    iconBg: "from-blue-500/20 to-indigo-600/10",
+    iconText: "text-blue-600 dark:text-blue-400",
+    iconLabel: "▦",
+    skills: [
+      { name: "MySQL" },
+      { name: "Supabase" },
+      { name: "PostgreSQL" },
+    ],
+  },
+  {
+    key: "devops",
+    title: t("skills.devops"),
+    iconBg: "from-orange-500/20 to-red-600/10",
+    iconText: "text-orange-600 dark:text-orange-400",
+    iconLabel: "⬡",
+    skills: [
+      { name: "Git" },
+      { name: "GitHub" },
+      { name: "Postman" },
+      { name: "Cloudinary" },
+      { name: "Mercado Pago API" },
+      { name: "Linux (basic)" },
+      { name: "Docker" },
+    ],
+  },
+];
+---
+
+<section id="skills" class="py-32 sm:py-40 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
+
+  <!-- Ambient blob -->
+  <div
+    class="absolute top-1/2 left-1/2 w-[900px] h-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
+    style="background: radial-gradient(circle, rgba(83,181,152,0.04) 0%, transparent 65%);"
+    data-parallax="-0.04"
+  ></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section heading -->
+    <div class="text-center mb-20 reveal">
+      <p class="eyebrow mb-3">{t("skills.subtitle")}</p>
+      <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white section-title-center">
+        <span data-i18n="skills.title">{t("skills.title")}</span>
+      </h2>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {skillCategories.map((category, catIdx) => (
+        <div
+          class={`reveal gradient-border rounded-3xl bg-white dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/50 p-7 sm:p-8 shadow-sm delay-${catIdx * 100}`}
+        >
+          <!-- Category header -->
+          <div class="flex items-center gap-4 mb-7">
+            <div
+              class={`w-10 h-10 rounded-xl flex items-center justify-center text-lg font-bold bg-gradient-to-br ${category.iconBg} border border-slate-200/60 dark:border-slate-700/40 flex-shrink-0`}
+            >
+              <span class={category.iconText}>{category.iconLabel}</span>
+            </div>
+            <h3
+              class="text-base font-bold text-slate-800 dark:text-slate-100 tracking-tight"
+              data-i18n={`skills.${category.key}`}
+            >
+              {category.title}
+            </h3>
+          </div>
+
+          <!-- Skill pills grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            {category.skills.map((skill, skillIdx) => (
+              <div
+                class={`group flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl
+                  bg-white dark:bg-slate-700/40
+                  border border-slate-200/80 dark:border-slate-600/40
+                  hover:border-brand-teal/50 dark:hover:border-brand-lime/40
+                  hover:bg-brand-teal/5 dark:hover:bg-brand-teal/10
+                  hover:shadow-sm
+                  transition-all duration-200 hover:-translate-y-0.5 cursor-default
+                  delay-${skillIdx * 40}`}
+              >
+               
+                <span class="text-[13px] font-medium text-slate-700 dark:text-slate-300 truncate group-hover:text-slate-900 dark:group-hover:text-white transition-colors duration-200">
+                  {skill.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

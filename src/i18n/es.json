@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "projects": "Proyectos",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "toggleTheme": "Cambiar tema",
+    "toggleLang": "English"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "available": "Abierto a Oportunidades",
+    "name": "Luciano Romero",
+    "title": "Desarrollador FullStack",
+    "subtitle": "Desarrollador FullStack especializado en aplicaciones web y móviles modernas utilizando React, React Native, Node.js y Next.js. Apasionado por construir productos escalables y soluciones reales.",
+    "ctaProjects": "Ver Proyectos",
+    "ctaContact": "Contactar",
+    "scrollDown": "Desplazarse hacia abajo"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "subtitle": "Un poco sobre quién soy",
+    "bio1": "Soy desarrollador de software FullStack con alrededor de cuatro años de experiencia creando aplicaciones web y móviles. Me gusta construir sistemas escalables y transformar ideas en productos reales.",
+    "bio2": "Actualmente estoy cursando Ingeniería en Sistemas de Información en la Universidad Tecnológica Nacional (UTN) mientras desarrollo proyectos profesionales y personales enfocados en tecnologías web modernas y aplicaciones móviles.",
+    "location": "Mendoza, Argentina",
+    "experience": "4+ Años de Experiencia",
+    "available": "Abierto a Oportunidades",
+    "labelLocation": "Ubicación",
+    "labelExperience": "Experiencia",
+    "labelStatus": "Estado",
+    "yearsShort": "anos"
+  },
+  "skills": {
+    "title": "Habilidades",
+    "subtitle": "Tecnologías con las que trabajo",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "databases": "Bases de Datos",
+    "devops": "DevOps & Herramientas"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "subtitle": "Software que he desarrollado",
+    "featured": "Proyectos Destacados",
+    "viewAll": "Ver Todos los Proyectos",
+    "viewProject": "Ver Proyecto",
+    "github": "GitHub",
+    "liveDemo": "Demo",
+    "technologies": "Tecnologías",
+    "backToProjects": "Volver a Proyectos",
+    "noProjects": "No se encontraron proyectos.",
+    "gallery": "Galería"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Siempre estoy abierto a nuevas oportunidades, colaboraciones o proyectos interesantes.",
+    "tagline": "Hablemos de tu proximo proyecto",
+    "availability": "Disponible para oportunidades remotas y proyectos freelance de alto impacto.",
+    "email": "Correo",
+    "copyEmail": "Copiar email",
+    "copied": "Copiado",
+    "emailDescription": "Canal principal para propuestas y colaboraciones.",
+    "emailCta": "Escribirme",
+    "github": "GitHub",
+    "githubDescription": "Codigo abierto, experimentos y repositorios activos.",
+    "githubCta": "Ver perfil",
+    "linkedin": "LinkedIn",
+    "linkedinDescription": "Experiencia profesional, networking y trayectoria.",
+    "linkedinCta": "Conectar",
+    "sendEmail": "Enviar correo"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Hecho con",
+    "availableForWork": "Disponible para trabajar",
+    "navigation": "Navegacion",
+    "connect": "Contacto",
+    "builtWith": "Construido con",
+    "deployedOnVercel": "Desplegado en Vercel"
+  },
+  "meta": {
+    "homeTitle": "Luciano Romero — Desarrollador FullStack",
+    "homeDescription": "Portafolio de Luciano Romero, desarrollador FullStack especializado en desarrollo web y mobile con React, React Native, Node.js y Next.js.",
+    "projectsTitle": "Proyectos — Luciano Romero",
+    "projectsDescription": "Explora los proyectos de software desarrollados por Luciano Romero, incluyendo aplicaciones móviles, plataformas web y sistemas fullstack."
+  }
+}

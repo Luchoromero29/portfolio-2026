@@ -1,0 +1,345 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/ui/Navbar.astro";
+import Footer from "../../components/ui/Footer.astro";
+import { useTranslations } from "../../i18n/utils";
+import { projects, getProjectBySlug } from "../../data/projects";
+import type { Language } from "../../i18n/utils";
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const project = getProjectBySlug(slug!);
+
+if (!project) {
+  return Astro.redirect("/projects");
+}
+
+const lang: Language = "es";
+const { t } = await useTranslations(lang);
+
+const placeholderGradients = [
+  "from-[#c8db87]/80 to-[#53b598]/80",
+  "from-[#53b598]/80 to-[#6abda0]/80",
+  "from-[#6abda0]/80 to-[#8eca91]/80",
+  "from-slate-700 to-slate-800",
+  "from-slate-800 to-slate-900",
+];
+
+const images = project.images.length > 0
+  ? project.images
+  : [project.thumbnail].filter(Boolean) as string[];
+
+const techColors: Record<string, string> = {
+  "Node.js":    "bg-green-500/8  text-green-600  dark:text-green-400  border-green-500/20",
+  TypeScript:   "bg-blue-500/8   text-blue-600   dark:text-blue-400   border-blue-500/20",
+  React:        "bg-cyan-500/8   text-cyan-600   dark:text-cyan-400   border-cyan-500/20",
+  Astro:        "bg-orange-500/8 text-orange-600 dark:text-orange-400 border-orange-500/20",
+  Python:       "bg-yellow-500/8 text-yellow-700 dark:text-yellow-400 border-yellow-500/20",
+  Docker:       "bg-sky-500/8    text-sky-600    dark:text-sky-400    border-sky-500/20",
+  PostgreSQL:   "bg-indigo-500/8 text-indigo-600 dark:text-indigo-400 border-indigo-500/20",
+  Redis:        "bg-red-500/8    text-red-600    dark:text-red-400    border-red-500/20",
+  GraphQL:      "bg-pink-500/8   text-pink-600   dark:text-pink-400   border-pink-500/20",
+  default:      "bg-brand-teal/8 text-brand-teal dark:text-brand-lime  border-brand-teal/20",
+};
+---
+
+<Layout
+  title={`${project.title} — Luciano Romero`}
+  description={project.shortDescription}
+  lang={lang}
+>
+  <Navbar lang={lang} currentPath={`/projects/${slug}`} />
+
+  <main class="min-h-screen bg-white dark:bg-slate-900 pt-24 pb-24">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- ── Top nav row ──────────────────────────────────────────────────── -->
+      <div class="flex items-center justify-between mb-14 pt-4">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-2 text-[13px] font-semibold text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 group"
+        >
+          <svg class="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+          <span data-i18n="projects.backToProjects">{t("projects.backToProjects")}</span>
+        </a>
+
+        {project.featured && (
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-brand-lime/15 text-brand-teal dark:text-brand-lime border border-brand-lime/30">
+            ★ Proyecto Destacado
+          </span>
+        )}
+      </div>
+
+      <!-- ── Title block ──────────────────────────────────────────────────── -->
+      <div class="mb-10">
+        <!-- Index label -->
+        <p class="eyebrow mb-4">Proyecto</p>
+
+        <h1 class="text-4xl sm:text-5xl md:text-[56px] font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.08] mb-6">
+          {project.title}
+        </h1>
+
+        <p class="text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-2xl mb-8">
+          {project.shortDescription}
+        </p>
+
+        <!-- Meta strip: tech + CTAs -->
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+          <!-- Tech pills -->
+          <div class="flex flex-wrap gap-2 flex-1">
+            {project.technologies.map((tech) => (
+              <span class={`px-2.5 py-1 rounded-lg text-[12px] font-semibold border ${techColors[tech] ?? techColors.default}`}>
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex items-center gap-2.5 shrink-0">
+            {project.github && (
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-semibold bg-slate-900 dark:bg-slate-700 hover:bg-slate-800 dark:hover:bg-slate-600 text-white border border-slate-800 dark:border-slate-600 transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                GitHub
+              </a>
+            )}
+            {project.liveDemo ? (
+              <a
+                href={project.liveDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-[13px] font-bold text-slate-900 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+                style="background: linear-gradient(135deg, #c8db87, #53b598);"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                Demo
+              </a>
+            ) : (
+              <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-[13px] font-medium text-slate-400 border border-dashed border-slate-200 dark:border-slate-700">
+                Sin demo
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Divider ──────────────────────────────────────────────────────── -->
+      <div class="border-t border-slate-200 dark:border-slate-800 mb-10"></div>
+
+      <!-- ── Gallery ─────────────────────────────────────────────────────── -->
+      <div class="mb-16">
+        <!-- Main carousel -->
+        <div
+          id="carousel"
+          class="relative rounded-2xl overflow-hidden bg-slate-950 shadow-xl mb-4"
+          style="aspect-ratio: 16/9;"
+        >
+          <div id="carousel-track" class="flex h-full transition-transform duration-500 ease-in-out">
+            {images.map((img, i) => (
+              <div
+                class="relative flex-shrink-0 w-full h-full cursor-zoom-in group bg-slate-950"
+                data-slide-index={i}
+                id={`slide-${i}`}
+              >
+                <div class={`absolute inset-0 bg-gradient-to-br ${placeholderGradients[i % placeholderGradients.length]} opacity-25`}></div>
+                <img
+                  src={img}
+                  alt={`${project.title} ${i + 1}`}
+                  class="absolute inset-0 w-full h-full object-contain opacity-0 transition-opacity duration-300"
+                  loading="lazy"
+                  onload="this.style.opacity='1'"
+                  onerror="this.style.display='none'"
+                />
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+              </div>
+            ))}
+          </div>
+
+          <!-- Prev / Next -->
+          <button id="carousel-prev" class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-xl bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200 hover:scale-105" aria-label="Previous">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button id="carousel-next" class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-xl bg-black/50 hover:bg-black/70 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200 hover:scale-105" aria-label="Next">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+
+          <!-- Counter -->
+          <div class="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-md bg-black/50 backdrop-blur-sm text-white/80 text-[11px] font-medium">
+            <span id="carousel-counter">1</span><span class="text-white/40"> / {images.length}</span>
+          </div>
+
+          <!-- Dots -->
+          <div id="carousel-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+            {images.map((_, i) => (
+              <button
+                class={`carousel-dot rounded-full transition-all duration-300 ${i === 0 ? "w-5 h-1.5 bg-white" : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70"}`}
+                data-dot-index={i}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <!-- Thumbnail strip -->
+        {images.length > 1 && (
+          <div class="flex gap-2.5 overflow-x-auto pb-1">
+            {images.map((img, i) => (
+              <button
+                class={`carousel-thumb flex-shrink-0 w-[72px] h-[50px] rounded-xl overflow-hidden border-2 transition-all duration-200 ${i === 0 ? "border-brand-teal" : "border-transparent opacity-50 hover:opacity-80 hover:border-slate-400"}`}
+                data-thumb-index={i}
+                aria-label={`View image ${i + 1}`}
+              >
+                <div class={`w-full h-full bg-slate-900 relative`}>
+                  <div class={`absolute inset-0 bg-gradient-to-br ${placeholderGradients[i % placeholderGradients.length]} opacity-40`}></div>
+                  <img
+                    src={img}
+                    alt=""
+                    class="absolute inset-0 w-full h-full object-contain opacity-0 transition-opacity duration-200"
+                    loading="lazy"
+                    onload="this.style.opacity='1'"
+                    onerror="this.style.display='none'"
+                  />
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <!-- ── Description ─────────────────────────────────────────────────── -->
+      <div class="mb-16">
+        <div class="flex items-center gap-4 mb-6">
+          <h2 class="text-[11px] font-black tracking-[0.2em] uppercase text-slate-400 dark:text-slate-500">
+            Descripcion
+          </h2>
+          <div class="flex-1 h-px bg-slate-200 dark:bg-slate-800"></div>
+        </div>
+        <p class="text-[17px] text-slate-600 dark:text-slate-300 leading-[1.85] max-w-3xl">
+          {project.description}
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <Footer lang={lang} />
+</Layout>
+
+<!-- Lightbox -->
+<div
+  id="lightbox"
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/95 backdrop-blur-md"
+  role="dialog"
+  aria-modal="true"
+>
+  <button id="lightbox-close" class="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Close">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Previous">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+
+  <div class="relative mx-4 sm:mx-16 flex items-center justify-center" style="max-width: min(900px, calc(100vw - 2rem));">
+    <img id="lightbox-img" src="" alt="" class="block max-w-full max-h-[85vh] w-auto h-auto rounded-2xl shadow-2xl bg-slate-950" style="object-fit: contain;" />
+  </div>
+
+  <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors" aria-label="Next">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-xs font-medium">
+    <span id="lightbox-counter"></span>
+  </div>
+</div>
+
+<script is:inline define:vars={{ totalImages: images.length, imageList: images }}>
+  var currentIndex = 0;
+  var track   = document.getElementById("carousel-track");
+  var counter = document.getElementById("carousel-counter");
+  var dots    = document.querySelectorAll(".carousel-dot");
+  var thumbs  = document.querySelectorAll(".carousel-thumb");
+
+  function goToSlide(index) {
+    if (index < 0) index = totalImages - 1;
+    if (index >= totalImages) index = 0;
+    currentIndex = index;
+    track.style.transform = "translateX(-" + index * 100 + "%)";
+    if (counter) counter.textContent = String(index + 1);
+
+    dots.forEach(function (d, i) {
+      var active = i === index;
+      d.classList.toggle("w-5", active);
+      d.classList.toggle("bg-white", active);
+      d.classList.toggle("w-1.5", !active);
+      d.classList.toggle("bg-white/40", !active);
+    });
+    thumbs.forEach(function (th, i) {
+      th.classList.toggle("border-brand-teal", i === index);
+      th.classList.toggle("border-transparent", i !== index);
+      th.classList.toggle("opacity-50", i !== index);
+    });
+  }
+
+  document.getElementById("carousel-prev").addEventListener("click", function () { goToSlide(currentIndex - 1); });
+  document.getElementById("carousel-next").addEventListener("click", function () { goToSlide(currentIndex + 1); });
+  dots.forEach(function (d)   { d.addEventListener("click",  function () { goToSlide(parseInt(d.getAttribute("data-dot-index"))); }); });
+  thumbs.forEach(function (t) { t.addEventListener("click",  function () { goToSlide(parseInt(t.getAttribute("data-thumb-index"))); }); });
+
+  document.addEventListener("keydown", function (e) {
+    var lb = document.getElementById("lightbox");
+    if (lb && !lb.classList.contains("hidden")) {
+      if (e.key === "ArrowLeft")  openLightbox(currentIndex - 1);
+      if (e.key === "ArrowRight") openLightbox(currentIndex + 1);
+      if (e.key === "Escape")     closeLightbox();
+    } else {
+      if (e.key === "ArrowLeft")  goToSlide(currentIndex - 1);
+      if (e.key === "ArrowRight") goToSlide(currentIndex + 1);
+    }
+  });
+
+  var lightbox      = document.getElementById("lightbox");
+  var lightboxImg   = document.getElementById("lightbox-img");
+  var lightboxCtr   = document.getElementById("lightbox-counter");
+
+  function openLightbox(index) {
+    if (index < 0) index = totalImages - 1;
+    if (index >= totalImages) index = 0;
+    currentIndex = index;
+    if (lightboxImg) lightboxImg.src = imageList[index] || "";
+    if (lightboxCtr) lightboxCtr.textContent = (index + 1) + " / " + totalImages;
+    if (lightbox) { lightbox.classList.remove("hidden"); lightbox.classList.add("flex"); document.body.style.overflow = "hidden"; }
+  }
+  function closeLightbox() {
+    if (lightbox) { lightbox.classList.add("hidden"); lightbox.classList.remove("flex"); document.body.style.overflow = ""; }
+  }
+
+  document.querySelectorAll("[data-slide-index]").forEach(function (s) {
+    s.addEventListener("click", function () { openLightbox(parseInt(s.getAttribute("data-slide-index"))); });
+  });
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-prev").addEventListener("click",  function () { openLightbox(currentIndex - 1); });
+  document.getElementById("lightbox-next").addEventListener("click",  function () { openLightbox(currentIndex + 1); });
+  lightbox.addEventListener("click", function (e) { if (e.target === lightbox) closeLightbox(); });
+
+  var touchStartX = 0;
+  var carousel = document.getElementById("carousel");
+  carousel.addEventListener("touchstart", function (e) { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  carousel.addEventListener("touchend",   function (e) {
+    var diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 50) goToSlide(diff > 0 ? currentIndex + 1 : currentIndex - 1);
+  }, { passive: true });
+</script>

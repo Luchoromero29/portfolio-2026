@@ -1,0 +1,198 @@
+---
+import Button from "../ui/Button.astro";
+import type { Language } from "../../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const { t } = await useTranslations(lang);
+
+
+---
+
+<section
+  id="hero"
+  class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden gradient-animated"
+>
+  <!-- ── Layered mesh background ─────────────────────────────────────── -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+
+    <!-- Primary orb — top right, teal -->
+    <div
+      data-parallax="0.12"
+      class="absolute -top-40 -right-40 w-[700px] h-[700px] rounded-full"
+      style="background: radial-gradient(circle at 40% 40%, rgba(83,181,152,0.22) 0%, transparent 65%); animation: pulse-slow 6s ease-in-out infinite;"
+    ></div>
+
+    <!-- Secondary orb — bottom left, lime -->
+    <div
+      data-parallax="0.22"
+      class="absolute -bottom-48 -left-48 w-[600px] h-[600px] rounded-full"
+      style="background: radial-gradient(circle at 60% 60%, rgba(200,219,135,0.16) 0%, transparent 65%); animation: pulse-slow 8s ease-in-out infinite 2.5s;"
+    ></div>
+
+    <!-- Tertiary orb — center-left, seafoam -->
+    <div
+      data-parallax="0.08"
+      class="absolute top-1/2 -left-20 w-[400px] h-[400px] rounded-full"
+      style="background: radial-gradient(circle, rgba(106,189,160,0.1) 0%, transparent 70%); animation: pulse-slow 10s ease-in-out infinite 1s;"
+    ></div>
+
+    <!-- Fine grid / dots -->
+    <div
+      class="absolute inset-0 opacity-[0.035]"
+      style="background-image: radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px); background-size: 36px 36px;"
+    ></div>
+
+    <!-- Subtle horizontal lines -->
+    <div
+      class="absolute inset-0 opacity-[0.025]"
+      style="background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px); background-size: 100% 80px;"
+    ></div>
+
+    <!-- Floating geometric accents -->
+    <div
+      data-parallax="0.18"
+      class="absolute top-[22%] left-[8%] w-14 h-14 rounded-2xl border border-brand-lime/25"
+      style="animation: float 7s ease-in-out infinite; backdrop-filter: blur(1px);"
+    ></div>
+    <div
+      data-parallax="0.28"
+      class="absolute top-[38%] right-[12%] w-7 h-7 rounded-lg border border-brand-teal/35 rotate-45"
+      style="animation: float 5s ease-in-out infinite 1.2s;"
+    ></div>
+    <div
+      data-parallax="0.14"
+      class="absolute bottom-[28%] right-[8%] w-10 h-10 rounded-xl border border-brand-seafoam/25"
+      style="animation: float 9s ease-in-out infinite 0.7s;"
+    ></div>
+    <div
+      data-parallax="0.32"
+      class="absolute top-[15%] right-[30%] w-3 h-3 rounded-full bg-brand-lime/30"
+      style="animation: float 6s ease-in-out infinite 2s;"
+    ></div>
+    <div
+      data-parallax="0.2"
+      class="absolute bottom-[35%] left-[18%] w-4 h-4 rounded-full bg-brand-teal/25"
+      style="animation: float 8s ease-in-out infinite 0.3s;"
+    ></div>
+  </div>
+
+  <!-- ── Main content ────────────────────────────────────────────────── -->
+  <div class="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+
+    <!-- Available badge -->
+    <div
+      class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-8 glass border border-brand-teal/20"
+      style="animation: slide-down 0.7s cubic-bezier(0.16,1,0.3,1) both 0.15s; opacity: 0;"
+    >
+      <!-- Pulsing ring -->
+      <span class="relative flex h-2.5 w-2.5">
+        <span
+          class="absolute inline-flex h-full w-full rounded-full bg-brand-lime opacity-60"
+          style="animation: pulse-slow 2s ease-in-out infinite;"
+        ></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-lime"></span>
+      </span>
+      <span class="text-brand-lime text-xs font-semibold tracking-wide" data-i18n="hero.available">
+        {t("hero.available")}
+      </span>
+    </div>
+
+    <!-- Greeting + Name -->
+    <div
+      class="mb-5"
+      style="animation: blur-in 0.9s cubic-bezier(0.16,1,0.3,1) both 0.3s; opacity: 0;"
+    >
+      <span class="block text-xl sm:text-2xl text-slate-400 font-light tracking-wide mb-3" data-i18n="hero.greeting">
+        {t("hero.greeting")}
+      </span>
+      <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-[96px] font-extrabold tracking-[-0.04em] text-white leading-none">
+        {t("hero.name")}
+      </h1>
+    </div>
+
+    <!-- Role title with shimmer -->
+    <div
+      class="mb-7"
+      style="animation: slide-up 0.8s cubic-bezier(0.16,1,0.3,1) both 0.5s; opacity: 0;"
+    >
+      <p class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+        <span class="text-shimmer text-cursor" data-i18n="hero.title">{t("hero.title")}</span>
+      </p>
+    </div>
+
+    <!-- Subtitle -->
+    <p
+      class="text-base sm:text-lg text-slate-400 max-w-xl mx-auto mb-11 leading-[1.8]"
+      style="animation: fade-in 1s ease both 0.75s; opacity: 0;"
+      data-i18n="hero.subtitle"
+    >
+      {t("hero.subtitle")}
+    </p>
+
+    <!-- CTA buttons -->
+    <div
+      class="flex flex-col sm:flex-row gap-4 justify-center mb-20"
+      style="animation: slide-up 0.8s cubic-bezier(0.16,1,0.3,1) both 0.9s; opacity: 0;"
+    >
+      <Button href="/projects" variant="primary" size="lg" class="magnetic group">
+        <span data-i18n="hero.ctaProjects">{t("hero.ctaProjects")}</span>
+        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </Button>
+      <Button href="#contact" variant="outline" size="lg" class="magnetic">
+        <span data-i18n="hero.ctaContact">{t("hero.ctaContact")}</span>
+      </Button>
+    </div>
+
+    <!-- Stats bar -->
+    <!-- <div
+      class="flex items-center justify-center gap-0 border border-white/8 rounded-2xl overflow-hidden glass inline-flex mx-auto"
+      style="animation: blur-in 1s cubic-bezier(0.16,1,0.3,1) both 1.1s; opacity: 0; display: inline-flex;"
+    >
+      {stats.map((stat, i) => (
+        <div
+          class={`px-8 py-4 text-center ${i < stats.length - 1 ? "border-r border-white/10" : ""}`}
+        >
+          <div class="text-2xl font-extrabold text-white tracking-tight">{stat.value}</div>
+          <div class="text-xs text-slate-500 font-medium mt-0.5 whitespace-nowrap">{stat.label}</div>
+        </div>
+      ))}
+    </div> -->
+  </div>
+
+  <!-- ── Scroll indicator ────────────────────────────────────────────── -->
+  <div
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600"
+    style="animation: fade-in 1.2s ease both 1.8s; opacity: 0;"
+  >
+    <span class="text-[10px] tracking-[0.2em] uppercase" data-i18n="hero.scrollDown">{t("hero.scrollDown")}</span>
+    <!-- Mouse icon -->
+    <div class="w-5 h-8 rounded-full border border-slate-600 flex items-start justify-center p-1.5">
+      <div
+        class="w-1 h-2 bg-brand-teal/80 rounded-full"
+        style="animation: slide-down 1.8s ease-in-out infinite;"
+      ></div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  // Magnetic button effect
+  document.querySelectorAll(".magnetic").forEach(function (el) {
+    el.addEventListener("mousemove", function (e) {
+      var rect = el.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = "translate(" + x * 0.18 + "px, " + y * 0.18 + "px) scale(1.02)";
+    });
+    el.addEventListener("mouseleave", function () {
+      el.style.transform = "translate(0, 0) scale(1)";
+    });
+  });
+</script>

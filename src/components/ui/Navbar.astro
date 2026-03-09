@@ -1,0 +1,319 @@
+---
+import type { Language } from "../../i18n/utils";
+
+export interface Props {
+  lang: Language;
+  currentPath: string;
+}
+
+const { lang, currentPath } = Astro.props;
+
+const navLinks = [
+  { key: "nav.home",     href: "/",        label: lang === "es" ? "Inicio"    : "Home" },
+  { key: "nav.projects", href: "/projects", label: lang === "es" ? "Proyectos" : "Projects" },
+  { key: "nav.about",    href: "/#about",   label: lang === "es" ? "Sobre mí"  : "About" },
+  { key: "nav.contact",  href: "/#contact", label: lang === "es" ? "Contacto"  : "Contact" },
+];
+
+function isActive(href: string) {
+  if (href === "/") return currentPath === "/";
+  return currentPath.startsWith(href.replace("/#", "/"));
+}
+---
+
+<!-- Scroll progress bar -->
+<div
+  id="scroll-progress"
+  class="fixed top-0 left-0 z-60 h-0.5 w-0 pointer-events-none transition-none"
+  style="background: linear-gradient(90deg, #53b598, #c8db87, #53b598); background-size: 200% 100%;"
+  aria-hidden="true"
+></div>
+
+<header
+  id="navbar"
+  class="fixed top-0.5 left-0 right-0 z-50 transition-all duration-500"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center justify-between h-16 md:h-18">
+
+      <!-- Logo -->
+      <a href="/" class="group flex items-center gap-2.5" aria-label="Home">
+        <div class="relative">
+          <img src="/assets/logo-lr.png" alt="Luciano Romero" class="w-8 h-7" />
+        </div>
+        <span class="font-semibold text-[15px] hidden sm:block tracking-tight text-slate-800 dark:text-white group-hover:text-brand-teal dark:group-hover:text-brand-lime transition-colors duration-200">
+          Luciano Romero
+        </span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <ul class="hidden md:flex items-center gap-1">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              data-i18n={link.key}
+              class={`relative px-4 py-2 rounded-lg text-[13.5px] font-medium transition-colors duration-200 group ${
+                isActive(link.href)
+                  ? "text-brand-teal dark:text-brand-lime"
+                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              {link.label}
+              <span
+                class={`absolute bottom-0.5 left-4 right-4 h-0.5 rounded-full transition-all duration-300 origin-left ${
+                  isActive(link.href)
+                    ? "scale-x-100 opacity-100"
+                    : "scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-60"
+                }`}
+                style="background: linear-gradient(90deg, #53b598, #c8db87);"
+              ></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Right controls -->
+      <div class="flex items-center gap-1.5">
+
+        <!-- Language pill -->
+        <button
+          id="lang-toggle"
+          onclick="toggleLanguage()"
+          data-i18n="nav.toggleLang"
+          class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wider border transition-all duration-200 hover:scale-105 active:scale-95"
+          style="border-color: rgba(83,181,152,0.4); color: #53b598; background: rgba(83,181,152,0.08);"
+          aria-label="Toggle language"
+        >
+          {lang === "en" ? "ES" : "EN"}
+        </button>
+
+        <!-- Theme toggle -->
+        <button
+          id="theme-toggle"
+          class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-white/8 transition-all duration-200 hover:scale-105 active:scale-95"
+          aria-label="Toggle theme"
+        >
+          <svg id="icon-sun" class="w-4.5 h-4.5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+          <svg id="icon-moon" class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <!-- Mobile burger -->
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-white/8 transition-all duration-200"
+          aria-label="Open menu"
+          aria-expanded="false"
+        >
+          <svg id="hamburger-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h10M4 18h16" />
+          </svg>
+          <svg id="close-icon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile menu overlay + panel -->
+  <div
+    id="mobile-menu-backdrop"
+    class="md:hidden fixed inset-0 bg-slate-950/35 dark:bg-black/55 backdrop-blur-[2px] opacity-0 pointer-events-none transition-opacity duration-300"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    id="mobile-menu"
+    class="mobile-sheet md:hidden fixed left-3 right-3 top-18.5 rounded-3xl border border-slate-200/70 dark:border-slate-700/60 bg-white/88 dark:bg-slate-900/88 backdrop-blur-2xl p-3 opacity-0 pointer-events-none -translate-y-4 scale-[0.98] transition-all duration-350"
+    aria-hidden="true"
+  >
+    <div class="relative overflow-hidden rounded-[20px] border border-slate-200/75 dark:border-slate-800/80 bg-white/72 dark:bg-slate-950/68 p-2.5">
+      <div class="absolute -top-16 -right-16 w-40 h-40 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(83,181,152,0.2), transparent 65%);"></div>
+      <div class="absolute -bottom-12 -left-12 w-32 h-32 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(200,219,135,0.18), transparent 65%);"></div>
+
+      <div class="relative px-1 py-1.5 space-y-1.5">
+        {navLinks.map((link, idx) => (
+          <a
+            href={link.href}
+            data-i18n={link.key}
+            class="mobile-nav-link group flex items-center justify-between rounded-2xl border border-transparent px-3.5 py-3 text-[14px] font-semibold text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:border-brand-teal/30 hover:bg-brand-teal/8 transition-all duration-300"
+            style={`--stagger:${idx * 55}ms;`}
+          >
+            <span>{link.label}</span>
+            <span class="w-8 h-8 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-brand-teal dark:group-hover:text-brand-lime group-hover:border-brand-teal/40 transition-all duration-300">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        ))}
+
+        <button
+          id="mobile-lang-toggle"
+          onclick="toggleLanguage()"
+          data-i18n="nav.toggleLang"
+          class="mobile-nav-link mt-2 flex items-center justify-center gap-2 w-full rounded-2xl border border-brand-teal/30 bg-brand-teal/8 px-3.5 py-3 text-sm font-bold text-brand-teal dark:text-brand-lime hover:bg-brand-teal/14 transition-all duration-300"
+          style={`--stagger:${navLinks.length * 55}ms;`}
+        >
+          {lang === "en" ? "Cambiar a Español" : "Switch to English"}
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .mobile-sheet.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+  }
+
+  #mobile-menu-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-sheet .mobile-nav-link {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .mobile-sheet.is-open .mobile-nav-link {
+    animation: mobile-link-in 0.45s var(--ease-expo, cubic-bezier(0.16, 1, 0.3, 1)) both;
+    animation-delay: var(--stagger, 0ms);
+  }
+
+  @keyframes mobile-link-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script is:inline>
+  // ── Scroll progress ───────────────────────────────────────────────────────
+  var progressBar = document.getElementById("scroll-progress");
+  function updateProgress() {
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    if (progressBar && total > 0) progressBar.style.width = (window.scrollY / total * 100) + "%";
+  }
+
+  // ── Navbar glass effect on scroll ─────────────────────────────────────────
+  var navbar = document.getElementById("navbar");
+  function updateNavbar() {
+    var dark = document.documentElement.classList.contains("dark");
+    if (window.scrollY > 24) {
+      navbar.style.background = dark
+        ? "rgba(15,23,42,0.88)"
+        : "rgba(255,255,255,0.88)";
+      navbar.style.backdropFilter = "blur(20px) saturate(180%)";
+      navbar.style.webkitBackdropFilter = "blur(20px) saturate(180%)";
+      navbar.style.boxShadow = dark
+        ? "0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.3)"
+        : "0 1px 0 rgba(0,0,0,0.06), 0 4px 24px rgba(0,0,0,0.04)";
+    } else {
+      navbar.style.background = "";
+      navbar.style.backdropFilter = "";
+      navbar.style.webkitBackdropFilter = "";
+      navbar.style.boxShadow = "";
+    }
+  }
+
+  window.addEventListener("scroll", function () { updateNavbar(); updateProgress(); }, { passive: true });
+  updateNavbar();
+
+  // ── Theme toggle ──────────────────────────────────────────────────────────
+  var themeBtn = document.getElementById("theme-toggle");
+  var iconSun  = document.getElementById("icon-sun");
+  var iconMoon = document.getElementById("icon-moon");
+
+  function syncThemeIcons() {
+    var isDark = document.documentElement.classList.contains("dark");
+    iconSun.classList.toggle("hidden", !isDark);
+    iconMoon.classList.toggle("hidden", isDark);
+    updateNavbar();
+  }
+  syncThemeIcons();
+
+  themeBtn.addEventListener("click", function () {
+    var isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    syncThemeIcons();
+  });
+
+  // ── Mobile menu ───────────────────────────────────────────────────────────
+  var menuBtn       = document.getElementById("mobile-menu-btn");
+  var mobileMenu    = document.getElementById("mobile-menu");
+  var menuBackdrop  = document.getElementById("mobile-menu-backdrop");
+  var hamburgerIcon = document.getElementById("hamburger-icon");
+  var closeIconEl   = document.getElementById("close-icon");
+  var mobileLangBtn = document.getElementById("mobile-lang-toggle");
+
+  var menuOpen = false;
+
+  function setMobileMenu(open) {
+    menuOpen = open;
+    mobileMenu.classList.toggle("is-open", open);
+    menuBackdrop.classList.toggle("is-open", open);
+    hamburgerIcon.classList.toggle("hidden", open);
+    closeIconEl.classList.toggle("hidden", !open);
+    menuBtn.setAttribute("aria-expanded", String(open));
+    mobileMenu.setAttribute("aria-hidden", String(!open));
+    document.body.style.overflow = open ? "hidden" : "";
+  }
+
+  menuBtn.addEventListener("click", function () {
+    setMobileMenu(!menuOpen);
+  });
+
+  menuBackdrop.addEventListener("click", function () {
+    setMobileMenu(false);
+  });
+
+  function handleOutsideClose(event) {
+    if (!menuOpen) return;
+    var target = event.target;
+    if (!target) return;
+
+    // Ignore taps on the toggle button or inside the menu panel.
+    if (menuBtn.contains(target) || mobileMenu.contains(target)) return;
+
+    setMobileMenu(false);
+  }
+
+  document.addEventListener("pointerdown", handleOutsideClose, { passive: true });
+  document.addEventListener("touchstart", handleOutsideClose, { passive: true });
+
+  mobileMenu.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () {
+      setMobileMenu(false);
+    });
+  });
+
+  if (mobileLangBtn) {
+    mobileLangBtn.addEventListener("click", function () {
+      setTimeout(function () {
+        setMobileMenu(false);
+      }, 0);
+    });
+  }
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && menuOpen) {
+      setMobileMenu(false);
+    }
+  });
+</script>

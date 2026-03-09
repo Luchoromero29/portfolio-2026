@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "toggleTheme": "Toggle theme",
+    "toggleLang": "Español"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "available": "Open to Opportunities",
+    "name": "Luciano Romero",
+    "title": "FullStack Software Developer",
+    "subtitle": "FullStack developer specialized in modern web and mobile applications using React, React Native, Node.js and Next.js. Passionate about building scalable products and real-world solutions.",
+    "ctaProjects": "View Projects",
+    "ctaContact": "Contact Me",
+    "scrollDown": "Scroll down"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "A little about who I am",
+    "bio1": "I'm a FullStack software developer with around four years of experience building web and mobile applications. I enjoy creating scalable systems and transforming ideas into real products.",
+    "bio2": "Currently I am studying Information Systems Engineering at the National Technological University (UTN) while developing professional and personal projects focused on modern web technologies and mobile applications.",
+    "location": "Mendoza, Argentina",
+    "experience": "4+ Years Experience",
+    "available": "Open to Opportunities",
+    "labelLocation": "Location",
+    "labelExperience": "Experience",
+    "labelStatus": "Status",
+    "yearsShort": "yrs"
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Technologies I work with",
+    "backend": "Backend",
+    "frontend": "Frontend",
+    "databases": "Databases",
+    "devops": "DevOps & Tools"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Software I've built",
+    "featured": "Featured Projects",
+    "viewAll": "View All Projects",
+    "viewProject": "View Project",
+    "github": "GitHub",
+    "liveDemo": "Live Demo",
+    "technologies": "Technologies",
+    "backToProjects": "Back to Projects",
+    "noProjects": "No projects found.",
+    "gallery": "Gallery"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "I'm always open to new opportunities, collaborations, or interesting projects.",
+    "tagline": "Let us talk about your next project",
+    "availability": "Available for remote opportunities and high-impact freelance projects.",
+    "email": "Email",
+    "copyEmail": "Copy email",
+    "copied": "Copied",
+    "emailDescription": "Primary channel for opportunities and collaborations.",
+    "emailCta": "Send message",
+    "github": "GitHub",
+    "githubDescription": "Open-source work, experiments, and active repositories.",
+    "githubCta": "View profile",
+    "linkedin": "LinkedIn",
+    "linkedinDescription": "Professional background, networking, and career path.",
+    "linkedinCta": "Connect",
+    "sendEmail": "Send an email"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "madeWith": "Made with",
+    "availableForWork": "Available for work",
+    "navigation": "Navigation",
+    "connect": "Connect",
+    "builtWith": "Built with",
+    "deployedOnVercel": "Deployed on Vercel"
+  },
+  "meta": {
+    "homeTitle": "Luciano Romero — FullStack Software Developer",
+    "homeDescription": "Portfolio of Luciano Romero, FullStack developer specializing in modern web and mobile development with React, React Native, Node.js and Next.js.",
+    "projectsTitle": "Projects — Luciano Romero",
+    "projectsDescription": "Explore software projects built by Luciano Romero including mobile apps, web platforms and fullstack systems."
+  }
+}

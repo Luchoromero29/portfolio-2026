@@ -1,0 +1,25 @@
+---
+export interface Props {
+  class?: string;
+  hover?: boolean;
+}
+
+const { class: extraClass = "", hover = true } = Astro.props;
+
+const baseClass = [
+  "rounded-2xl overflow-hidden",
+  "bg-white dark:bg-slate-800",
+  "border border-slate-200/70 dark:border-slate-700/60",
+  "shadow-sm",
+  hover
+    ? "transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-brand-seafoam/50 dark:hover:border-brand-seafoam/40"
+    : "",
+  extraClass,
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<div class={baseClass}>
+  <slot />
+</div>

@@ -1,0 +1,67 @@
+---
+export interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "outline" | "glow";
+  size?: "sm" | "md" | "lg";
+  href?: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+  type?: "button" | "submit" | "reset";
+  "data-i18n"?: string;
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  class: extraClass = "",
+  target,
+  rel,
+  type = "button",
+  "data-i18n": dataI18n,
+  ...rest
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-teal active:scale-[0.97] select-none";
+
+const sizes = {
+  sm: "px-4 py-2 text-[13px]",
+  md: "px-5 py-2.5 text-[13.5px]",
+  lg: "px-7 py-3.5 text-[15px]",
+};
+
+const variants = {
+  primary:
+    "text-slate-900 bg-gradient-to-r from-brand-lime to-brand-teal hover:from-brand-teal hover:to-brand-seafoam shadow-md hover:shadow-lg hover:-translate-y-0.5 font-bold",
+  secondary:
+    "text-white bg-accent hover:bg-blue-700 shadow-md hover:shadow-lg hover:-translate-y-0.5",
+  ghost:
+    "text-slate-700 dark:text-slate-200 hover:bg-slate-100/80 dark:hover:bg-white/8 hover:text-slate-900 dark:hover:text-white",
+  outline:
+    "text-brand-teal dark:text-brand-lime border-2 border-brand-teal/70 dark:border-brand-lime/60 hover:bg-brand-teal/8 dark:hover:bg-brand-lime/8 hover:-translate-y-0.5 font-bold",
+  glow:
+    "text-slate-900 bg-gradient-to-r from-brand-lime to-brand-teal hover:from-brand-teal hover:to-brand-seafoam shadow-md hover:shadow-xl hover:-translate-y-1 font-bold glow-teal",
+};
+
+const classes = [base, sizes[size], variants[variant], extraClass].join(" ");
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class={classes}
+      target={target}
+      rel={rel || (target === "_blank" ? "noopener noreferrer" : undefined)}
+      data-i18n={dataI18n}
+      {...rest}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} data-i18n={dataI18n} {...rest}>
+      <slot />
+    </button>
+  )
+}

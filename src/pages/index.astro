@@ -1,17 +1,31 @@
 ---
+import About from "../components/sections/About.astro";
+import Contact from "../components/sections/Contact.astro";
+import Hero from "../components/sections/Hero.astro";
+import ProjectsPreview from "../components/sections/ProjectsPreview.astro";
+import Skills from "../components/sections/Skills.astro";
+import Footer from "../components/ui/Footer.astro";
+import Navbar from "../components/ui/Navbar.astro";
+import type { Language } from "../i18n/utils";
+import Layout from "../layouts/Layout.astro";
 
+const lang: Language = "es";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="Luciano Romero — Software Engineer"
+  description="Portfolio of Luciano Romero, Software Engineer specializing in modern web development with TypeScript, Node.js, and cloud technologies."
+  lang={lang}
+>
+  <Navbar lang={lang} currentPath={Astro.url.pathname} />
+
+  <main>
+    <Hero lang={lang} />
+    <About lang={lang} />
+    <Skills lang={lang} />
+    <ProjectsPreview lang={lang} />
+    <Contact lang={lang} />
+  </main>
+
+  <Footer lang={lang} />
+</Layout>

@@ -1,0 +1,129 @@
+---
+import type { Language } from "../../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
+
+export interface Props {
+  lang: Language;
+}
+
+const { lang } = Astro.props;
+const { t } = await useTranslations(lang);
+---
+
+<section id="about" class="py-32 sm:py-40 bg-white dark:bg-slate-900 relative overflow-hidden">
+
+  <!-- Subtle grid background -->
+  <div
+    class="absolute inset-0 pointer-events-none opacity-[0.025] dark:opacity-[0.04]"
+    style="background-image: linear-gradient(rgba(83,181,152,1) 1px, transparent 1px), linear-gradient(90deg, rgba(83,181,152,1) 1px, transparent 1px); background-size: 56px 56px;"
+  ></div>
+
+  <!-- Ambient orb -->
+  <div
+    class="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none"
+    style="background: radial-gradient(circle, rgba(83,181,152,0.07) 0%, transparent 65%); transform: translate(25%, -30%);"
+    data-parallax="0.06"
+  ></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-24 items-center">
+
+      <!-- ── Photo column ─────────────────────────────────────────── -->
+      <div class="reveal-left order-2 lg:order-1 flex justify-center">
+        <div class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-[360px] lg:h-[360px]">
+
+          <!-- Spinning conic gradient border -->
+          <div class="absolute inset-0 rounded-3xl spin-gradient-border"></div>
+
+          <!-- Photo frame -->
+          <div
+            class="relative w-full h-full rounded-3xl overflow-hidden border border-slate-700/60 shadow-2xl"
+            style="background: linear-gradient(160deg, #1e293b 0%, #0f172a 60%, #0d1f1a 100%); box-shadow: 0 32px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05);"
+          >
+            <!-- Subtle brand glow at the bottom -->
+            <div class="absolute bottom-0 left-0 right-0 h-1/2 pointer-events-none" style="background: linear-gradient(to top, rgba(83,181,152,0.12), transparent);"></div>
+            <!-- Photo -->
+            <img
+              src="/assets/foto-personal-sin-fondo.png"
+              alt="Luciano Romero"
+              class="absolute inset-0 w-full h-full object-contain object-bottom"
+            />
+          </div>
+
+          <!-- Floating availability badge -->
+          <div
+            class="absolute -bottom-5 -right-5 glass-dark rounded-2xl px-4 py-3 shadow-2xl border border-brand-teal/20"
+            style="animation: float 5s ease-in-out infinite;"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-brand-lime opacity-70" style="animation: pulse-slow 2s ease-in-out infinite;"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-lime"></span>
+              </span>
+              <div>
+                <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold" data-i18n="about.labelStatus">{t("about.labelStatus")}</p>
+                <p class="text-sm font-bold text-brand-lime leading-tight" data-i18n="about.available">{t("about.available")}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience badge -->
+          <div
+            class="absolute -top-5 -left-5 glass-dark rounded-2xl px-4 py-3 shadow-2xl border border-slate-700/50"
+            style="animation: float 6s ease-in-out infinite 1.5s;"
+          >
+            <p class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold mb-0.5" data-i18n="about.labelExperience">{t("about.labelExperience")}</p>
+            <p class="text-xl font-extrabold text-white leading-tight">4+ <span class="text-sm font-medium text-slate-400" data-i18n="about.yearsShort">{t("about.yearsShort")}</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Text column ──────────────────────────────────────────── -->
+      <div class="reveal order-1 lg:order-2 space-y-8">
+
+        <!-- Heading -->
+        <div>
+          <p class="eyebrow mb-3" data-i18n="about.subtitle">{t("about.subtitle")}</p>
+          <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] section-title">
+            <span data-i18n="about.title">{t("about.title")}</span>
+          </h2>
+        </div>
+
+        <!-- Bio -->
+        <div class="space-y-4">
+          <p class="text-slate-600 dark:text-slate-400 text-[17px] leading-[1.8]" data-i18n="about.bio1">
+            {t("about.bio1")}
+          </p>
+          <p class="text-slate-600 dark:text-slate-400 text-[17px] leading-[1.8]" data-i18n="about.bio2">
+            {t("about.bio2")}
+          </p>
+        </div>
+
+        <!-- Stat cards — 3 across -->
+        <div class="grid grid-cols-3 gap-4 pt-2">
+          {[
+            {labelKey: "about.labelLocation", valueKey: "about.location", color: "text-slate-800 dark:text-slate-200" },
+            {labelKey: "about.labelExperience", valueKey: "about.experience", color: "text-slate-800 dark:text-slate-200" },
+            {labelKey: "about.labelStatus", valueKey: "about.available", color: "text-brand-teal dark:text-brand-lime" },
+          ].map((card) => (
+            <div
+              class="dark:bg-slate-800 bg-brand-mint/20 group relative rounded-2xl p-4 border overflow-hidden cursor-default transition-all duration-300 hover:-translate-y-1"
+              style="border-color: rgba(226,232,240,0.1);"
+            >
+              <!-- Subtle gradient on hover via CSS -->
+              <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" style="background: linear-gradient(135deg, rgba(83,181,152,0.05), rgba(200,219,135,0.05));"></div>
+              <div class="relative">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1" data-i18n={card.labelKey}>
+                  {t(card.labelKey)}
+                </p>
+                <p class={`text-sm font-semibold leading-tight ${card.color}`} data-i18n={card.valueKey}>
+                  {t(card.valueKey)}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

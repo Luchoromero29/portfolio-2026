@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Update this once the final production domain is confirmed
+Sitemap: https://lucianoromero.dev/sitemap-index.xml

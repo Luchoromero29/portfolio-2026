@@ -7,14 +7,18 @@ import Skills from "../components/sections/Skills.astro";
 import Footer from "../components/ui/Footer.astro";
 import Navbar from "../components/ui/Navbar.astro";
 import type { Language } from "../i18n/utils";
+import { useTranslations } from "../i18n/utils";
 import Layout from "../layouts/Layout.astro";
 
 const lang: Language = "es";
+const { t } = await useTranslations(lang);
 ---
 
 <Layout
-  title="Luciano Romero — Software Engineer"
-  description="Portfolio of Luciano Romero, Software Engineer specializing in modern web development with TypeScript, Node.js, and cloud technologies."
+  title={t("meta.homeTitle")}
+  description={t("meta.homeDescription")}
+  ogImage="/assets/logo-lr.png"
+  ogImageAlt="Luciano Romero - Portfolio"
   lang={lang}
 >
   <Navbar lang={lang} currentPath={Astro.url.pathname} />

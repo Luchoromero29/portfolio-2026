@@ -8,17 +8,29 @@ export interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: "website" | "article";
+  robots?: string;
+  keywords?: string[];
   lang?: Language;
 }
 
 const {
   title,
-  description = "Portfolio of Luciano Romero, Software Engineer.",
-  ogImage = "/og-image.jpg",
+  description = "Portafolio de Luciano Romero, desarrollador FullStack.",
+  ogImage = "/assets/logo-lr.png",
+  ogImageAlt = "Luciano Romero Portfolio",
+  ogType = "website",
+  robots = "index, follow, max-image-preview:large",
+  keywords = ["Luciano Romero", "FullStack", "Portfolio", "React", "Node.js", "TypeScript"],
   lang = "es",
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? "https://lucianoromero.dev");
+const siteURL = Astro.site ?? new URL("https://lucianoromero.dev");
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const ogImageURL = new URL(ogImage, siteURL);
+const locale = lang === "es" ? "es_AR" : "en_US";
+const alternateLocale = lang === "es" ? "en_US" : "es_AR";
 
 const translations = { en: enTranslations, es: esTranslations };
 ---
@@ -33,24 +45,38 @@ const translations = { en: enTranslations, es: esTranslations };
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords.join(", ")} />
+    <meta name="author" content="Luciano Romero" />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#53b598" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="es" href={canonicalURL} />
+    <link rel="alternate" hreflang="en" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Luciano Romero" />
+    <meta property="og:locale" content={locale} />
+    <meta property="og:locale:alternate" content={alternateLocale} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:alt" content={ogImageAlt} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logo-lr.png" />
+    <link rel="icon" href="/assets/logo-lr.png" />
+    <link rel="apple-touch-icon" href="/assets/logo-lr.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -20,8 +20,10 @@ const gradients = [
 ---
 
 <Layout
-  title="Proyectos — Luciano Romero"
-  description="Explora los proyectos de software desarrollados por Luciano Romero: apps web, APIs, librerias y mas."
+  title={t("meta.projectsTitle")}
+  description={t("meta.projectsDescription")}
+  ogImage={projects[0]?.thumbnail ?? "/assets/logo-lr.png"}
+  ogImageAlt="Proyectos destacados de Luciano Romero"
   lang={lang}
 >
   <Navbar lang={lang} currentPath="/projects" />

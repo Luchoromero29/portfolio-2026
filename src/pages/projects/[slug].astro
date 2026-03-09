@@ -51,6 +51,9 @@ const techColors: Record<string, string> = {
 <Layout
   title={`${project.title} — Luciano Romero`}
   description={project.shortDescription}
+  ogImage={project.thumbnail || (project.images[0] ?? "/assets/logo-lr.png")}
+  ogImageAlt={`${project.title} - Proyecto de Luciano Romero`}
+  ogType="article"
   lang={lang}
 >
   <Navbar lang={lang} currentPath={`/projects/${slug}`} />

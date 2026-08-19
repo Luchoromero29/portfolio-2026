@@ -9,13 +9,11 @@ import type { Language } from "../../i18n/utils";
 const lang: Language = "es";
 const { t } = await useTranslations(lang);
 
-const gradients = [
-  { from: "#c8db87", to: "#53b598" },
-  { from: "#53b598", to: "#6abda0" },
-  { from: "#6abda0", to: "#8eca91" },
-  { from: "#8eca91", to: "#c8db87" },
-  { from: "#53b598", to: "#c8db87" },
-  { from: "#c8db87", to: "#6abda0" },
+const filterCategories = [
+  { key: "all", labelKey: "projects.allFilter" },
+  { key: "mobile-ai", labelKey: "projects.mobileAiFilter" },
+  { key: "saas-fullstack", labelKey: "projects.saasFullstackFilter" },
+  { key: "web-api", labelKey: "projects.webApiFilter" },
 ];
 ---
 
@@ -23,185 +21,224 @@ const gradients = [
   title={t("meta.projectsTitle")}
   description={t("meta.projectsDescription")}
   ogImage={projects[0]?.thumbnail ?? "/assets/logo-lr.png"}
-  ogImageAlt="Proyectos destacados de Luciano Romero"
+  ogImageAlt="Proyectos de software por Luciano Romero"
   lang={lang}
 >
   <Navbar lang={lang} currentPath="/projects" />
 
-  <main class="min-h-screen bg-surface-light dark:bg-surface-dark pt-24 pb-20">
+  <main class="min-h-screen bg-slate-50 dark:bg-slate-950 pt-24 pb-28 transition-colors duration-300">
 
-    <!-- Page header -->
-    <section class="relative py-20 overflow-hidden bg-gradient-to-b from-slate-900 to-slate-950">
+    <!-- ── Header (Supports Light & Dark Modes) ────────────────────────── -->
+    <section class="relative py-20 md:py-28 overflow-hidden bg-white dark:bg-[#090e1a] border-b border-slate-200/80 dark:border-slate-800 transition-colors duration-300">
+      <!-- Glow ambient balls -->
       <div
-        class="absolute -top-20 -right-20 w-96 h-96 rounded-full opacity-10 pointer-events-none"
-        style="background: radial-gradient(circle, #53b598, transparent);"
+        class="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full pointer-events-none opacity-25 dark:opacity-20"
+        style="background: radial-gradient(circle, rgba(83,181,152,0.4) 0%, transparent 70%);"
         data-parallax="0.1"
       ></div>
       <div
-        class="absolute -bottom-20 -left-20 w-80 h-80 rounded-full opacity-10 pointer-events-none"
-        style="background: radial-gradient(circle, #c8db87, transparent);"
+        class="absolute -bottom-24 -left-24 w-[450px] h-[450px] rounded-full pointer-events-none opacity-20 dark:opacity-15"
+        style="background: radial-gradient(circle, rgba(200,219,135,0.4) 0%, transparent 70%);"
         data-parallax="-0.08"
       ></div>
       <div
-        class="absolute inset-0 opacity-[0.03]"
-        style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 60px 60px;"
+        class="absolute inset-0 opacity-[0.03] dark:opacity-[0.04]"
+        style="background-image: radial-gradient(circle, currentColor 1px, transparent 1px); background-size: 32px 32px;"
       ></div>
+
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <p class="text-brand-teal font-semibold text-sm tracking-widest uppercase mb-3" data-i18n="projects.subtitle">
+        <p class="eyebrow mb-3" data-i18n="projects.subtitle">
           {t("projects.subtitle")}
         </p>
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-5">
           <span data-i18n="projects.title">{t("projects.title")}</span>
         </h1>
-        <p class="text-slate-400 text-lg max-w-xl mx-auto">
-          {projects.length} proyectos - open source, APIs, herramientas y apps web
+        <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+          <span>{projects.length} </span>
+          <span data-i18n="projects.totalCount">{t("projects.totalCount")}</span>
         </p>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mt-10">
+          {filterCategories.map((cat, idx) => (
+            <button
+              type="button"
+              class={`filter-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-200 border cursor-pointer select-none ${
+                idx === 0
+                  ? "is-active bg-gradient-to-r from-brand-lime to-brand-teal text-slate-950 border-transparent font-bold shadow-lg shadow-brand-teal/20"
+                  : "bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700/80 hover:border-brand-teal/50 hover:text-slate-900 dark:hover:text-white shadow-sm"
+              }`}
+              data-filter={cat.key}
+              data-i18n={cat.labelKey}
+            >
+              {t(cat.labelKey)}
+            </button>
+          ))}
+        </div>
       </div>
     </section>
 
-    <!-- Projects grid -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- ── Projects Showcase Grid ────────────────────────────────────────── -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {projects.map((project, idx) => {
-          const g = gradients[idx % gradients.length];
           const thumb = project.thumbnail || (project.images && project.images[0]) || "";
           return (
             <article
-              class={`card-proj reveal group relative overflow-hidden rounded-2xl cursor-pointer delay-${(idx % 3) * 100}`}
-              style="aspect-ratio: 4/5;"
-              role="link"
-              tabindex="0"
-              aria-label={`Ver ${project.title}`}
-              onclick={`window.location.href='/projects/${project.slug}'`}
-              onkeydown={`if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); window.location.href='/projects/${project.slug}'; }`}
+              class="project-card group relative rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg hover:shadow-2xl transition-all duration-400 hover:-translate-y-1.5 flex flex-col"
+              data-category={project.category}
             >
-              <!-- Image fill -->
-              <div
-                class="absolute inset-0"
-                style={`background: linear-gradient(135deg, ${g.from}cc, ${g.to}cc);`}
-              ></div>
-              {thumb && (
-                <img
-                  src={thumb}
-                  alt={project.title}
-                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-all duration-700 group-hover:scale-105"
-                  loading="lazy"
-                  onload="this.style.opacity='1'"
-                  onerror="this.style.display='none'"
-                />
-              )}
-
-              <!-- Bottom gradient vignette (always visible) -->
-              <div
-                class="absolute inset-0 pointer-events-none"
-                style="background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.45) 40%, rgba(0,0,0,0.05) 70%, transparent 100%);"
-              ></div>
-
-              <!-- Top gradient (subtle, for badges legibility) -->
-              <div
-                class="absolute inset-0 pointer-events-none"
-                style="background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 35%);"
-              ></div>
-
-              <!-- Top badges -->
-              <div class="absolute top-4 left-4 right-4 flex items-start justify-between z-10">
-                {project.featured ? (
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10.5px] font-bold bg-brand-lime/90 text-slate-900">
-                    ★ Destacado
-                  </span>
-                ) : <span></span>}
-                <span class="px-2.5 py-1 text-[10.5px] font-bold rounded-full backdrop-blur-sm bg-black/30 text-white border border-white/15">
-                  {project.technologies[0]}
-                </span>
-              </div>
-
-              <!-- Index number watermark -->
-              <div
-                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[120px] font-black leading-none select-none pointer-events-none transition-opacity duration-500 group-hover:opacity-0"
-                style={`color: rgba(255,255,255,0.07); letter-spacing: -0.06em;`}
+              <!-- Media Frame -->
+              <a
+                href={`/projects/${project.slug}`}
+                class="relative block w-full aspect-video sm:aspect-16/10 overflow-hidden bg-slate-950"
+                aria-label={`Ver ${project.title}`}
               >
-                {String(idx + 1).padStart(2, "0")}
-              </div>
+                <!-- Top badges -->
+                <div class="absolute top-4 left-4 right-4 flex items-center justify-between z-20 pointer-events-none">
+                  <div class="flex items-center gap-2">
+                    {project.featured && (
+                      <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-brand-lime/90 text-slate-950 backdrop-blur-md shadow-md">
+                        ★ Destacado
+                      </span>
+                    )}
+                    <span
+                      class="px-3 py-1 rounded-full text-[11px] font-semibold bg-black/60 text-white/90 border border-white/15 backdrop-blur-md"
+                      data-i18n={project.categoryKey}
+                    >
+                      {t(project.categoryKey)}
+                    </span>
+                  </div>
 
-              <!-- Bottom content -->
-              <div class="absolute bottom-0 left-0 right-0 p-5 z-10">
+                  <span class="px-3 py-1 rounded-full text-[11px] font-semibold bg-black/60 text-brand-lime border border-brand-lime/30 backdrop-blur-md" data-i18n={project.statusKey}>
+                    {t(project.statusKey)}
+                  </span>
+                </div>
 
-                <!-- Description (hidden → slides in on hover) -->
-                <div class="card-desc overflow-hidden" style="max-height: 0; transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1);">
-                  <p class="text-[12.5px] text-white/65 leading-relaxed mb-3 line-clamp-2">
-                    {project.shortDescription}
+                <!-- Ambient blurred background to fill any letterbox gap -->
+                {thumb && (
+                  <img
+                    src={thumb}
+                    alt=""
+                    aria-hidden="true"
+                    class="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
+                    loading="lazy"
+                  />
+                )}
+
+                <!-- Thumbnail (crisp and contained) -->
+                {thumb && (
+                  <img
+                    src={thumb}
+                    alt={project.title}
+                    class="relative z-10 w-full h-full object-contain object-center scale-100 group-hover:scale-[1.03] transition-transform duration-500 p-2 sm:p-3"
+                    loading="eager"
+                    decoding="async"
+                  />
+                )}
+
+                <!-- Hover hint button -->
+                <div class="absolute bottom-4 right-4 z-20 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 dark:bg-slate-900/90 text-slate-900 dark:text-white text-xs font-bold shadow-lg backdrop-blur-md">
+                  <span data-i18n="projects.viewProject">{t("projects.viewProject")}</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+
+              <!-- Card Content Body -->
+              <div class="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+                <div>
+                  <!-- Role & Year -->
+                  <div class="flex items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
+                    <span class="text-brand-teal dark:text-brand-lime font-semibold" data-i18n={project.roleKey}>
+                      {t(project.roleKey)}
+                    </span>
+                    <span>{project.year}</span>
+                  </div>
+
+                  <!-- Project Title -->
+                  <h2 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3 group-hover:text-brand-teal dark:group-hover:text-brand-lime transition-colors">
+                    <a href={`/projects/${project.slug}`}>
+                      {project.title}
+                    </a>
+                  </h2>
+
+                  <!-- Short description -->
+                  <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3 mb-5" data-i18n={`projectItems.${project.slug}.shortDescription`}>
+                    {t(`projectItems.${project.slug}.shortDescription`, project.shortDescription)}
                   </p>
                 </div>
 
-                <!-- Title -->
-                <h2 class="text-[17px] font-extrabold text-white leading-snug tracking-tight mb-3">
-                  {project.title}
-                </h2>
-
-                <!-- Tech pills + CTA -->
-                <div class="flex items-center justify-between gap-3">
-                  <div class="flex flex-wrap gap-1.5 min-w-0">
-                    {project.technologies.slice(0, 3).map((tech) => (
-                      <span class="px-2 py-0.5 rounded-md text-[10.5px] font-semibold backdrop-blur-sm bg-white/10 text-white/80 border border-white/15">
+                <!-- Footer: Tech tags + Links -->
+                <div>
+                  <!-- Tech stack chips -->
+                  <div class="flex flex-wrap gap-1.5 mb-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    {project.technologies.slice(0, 4).map((tech) => (
+                      <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
                         {tech}
                       </span>
                     ))}
-                    {project.technologies.length > 3 && (
-                      <span class="px-2 py-0.5 rounded-md text-[10.5px] font-semibold text-white/50">
-                        +{project.technologies.length - 3}
+                    {project.technologies.length > 4 && (
+                      <span class="px-2.5 py-1 rounded-lg text-xs font-medium text-slate-400 dark:text-slate-500">
+                        +{project.technologies.length - 4}
                       </span>
                     )}
                   </div>
 
-                  <!-- CTA arrow -->
-                  <a
-                    href={`/projects/${project.slug}`}
-                    class="shrink-0 h-9 px-3 rounded-full inline-flex items-center gap-1.5 transition-all duration-300 bg-white/10 border border-white/20 hover:bg-white hover:border-white text-white hover:text-slate-900"
-                    aria-label={`Ver ${project.title}`}
-                  >
-                    <span class="text-[11px] font-bold" data-i18n="projects.viewProject">{t("projects.viewProject")}</span>
-                    <svg class="w-4 h-4 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
-                  </a>
-                </div>
+                  <!-- CTAs -->
+                  <div class="flex items-center justify-between gap-3 pt-2">
+                    <a
+                      href={`/projects/${project.slug}`}
+                      class="inline-flex items-center gap-2 text-sm font-bold text-slate-900 dark:text-white hover:text-brand-teal dark:hover:text-brand-lime transition-colors"
+                    >
+                      <span data-i18n="projects.viewProject">{t("projects.viewProject")}</span>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </a>
 
-                <!-- GitHub + LiveDemo links (reveal on hover) -->
-                <div class="card-links overflow-hidden flex items-center gap-3 mt-3" style="max-height: 0; opacity: 0; transition: max-height 0.35s ease, opacity 0.3s ease 0.05s;">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/60 hover:text-white transition-colors"
-                      aria-label="GitHub"
-                      onclick="event.stopPropagation()"
-                    >
-                      <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
-                      </svg>
-                      GitHub
-                    </a>
-                  )}
-                  {project.liveDemo && (
-                    <a
-                      href={project.liveDemo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-1.5 text-[11px] font-semibold text-white/60 hover:text-white transition-colors"
-                      onclick="event.stopPropagation()"
-                    >
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-                      </svg>
-                      Demo
-                    </a>
-                  )}
+                    <div class="flex items-center gap-2">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-slate-900 transition-colors"
+                          aria-label="GitHub"
+                        >
+                          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z" />
+                          </svg>
+                        </a>
+                      )}
+                      {project.liveDemo && (
+                        <a
+                          href={project.liveDemo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-teal/10 hover:bg-brand-teal text-brand-teal hover:text-slate-900 border border-brand-teal/30 transition-all duration-200 inline-flex items-center gap-1.5"
+                        >
+                          <span data-i18n="projects.liveDemo">{t("projects.liveDemo")}</span>
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </article>
           );
         })}
+      </div>
+
+      <!-- No items found state -->
+      <div id="no-projects-msg" class="hidden text-center py-20">
+        <p class="text-slate-500 dark:text-slate-400 text-lg" data-i18n="projects.noProjects">
+          {t("projects.noProjects")}
+        </p>
       </div>
     </section>
   </main>
@@ -209,12 +246,42 @@ const gradients = [
   <Footer lang={lang} />
 </Layout>
 
-<style>
-  .card-proj:hover .card-desc {
-    max-height: 5rem;
-  }
-  .card-proj:hover .card-links {
-    max-height: 2.5rem;
-    opacity: 1;
-  }
-</style>
+<script is:inline>
+  (function () {
+    var buttons = document.querySelectorAll(".filter-btn");
+    var cards = document.querySelectorAll(".project-card");
+    var emptyMsg = document.getElementById("no-projects-msg");
+
+    var activeClasses = ["is-active", "bg-gradient-to-r", "from-brand-lime", "to-brand-teal", "text-slate-950", "border-transparent", "font-bold", "shadow-lg", "shadow-brand-teal/20"];
+    var inactiveClasses = ["bg-white", "dark:bg-slate-800/80", "text-slate-700", "dark:text-slate-300", "border-slate-200", "dark:border-slate-700/80", "shadow-sm"];
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var filter = btn.getAttribute("data-filter");
+
+        buttons.forEach(function (b) {
+          activeClasses.forEach(function (c) { b.classList.remove(c); });
+          inactiveClasses.forEach(function (c) { b.classList.add(c); });
+        });
+
+        inactiveClasses.forEach(function (c) { btn.classList.remove(c); });
+        activeClasses.forEach(function (c) { btn.classList.add(c); });
+
+        var visibleCount = 0;
+        cards.forEach(function (card) {
+          var category = card.getAttribute("data-category");
+          if (filter === "all" || filter === category) {
+            card.style.display = "";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        if (emptyMsg) {
+          emptyMsg.classList.toggle("hidden", visibleCount > 0);
+        }
+      });
+    });
+  })();
+</script>

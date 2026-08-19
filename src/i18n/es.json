@@ -1,8 +1,10 @@
 {
   "nav": {
     "home": "Inicio",
+    "experience": "Experiencia",
     "projects": "Proyectos",
     "about": "Sobre mí",
+    "skills": "Habilidades",
     "contact": "Contacto",
     "toggleTheme": "Cambiar tema",
     "toggleLang": "English"
@@ -11,61 +13,161 @@
     "greeting": "Hola, soy",
     "available": "Abierto a Oportunidades",
     "name": "Luciano Romero",
-    "title": "Desarrollador FullStack",
-    "subtitle": "Desarrollador FullStack especializado en aplicaciones web y móviles modernas utilizando React, React Native, Node.js y Next.js. Apasionado por construir productos escalables y soluciones reales.",
+    "title": "Full Stack Software Engineer",
+    "subtitle": "Ingeniero de Software Full Stack enfocado en arquitectura de software escalable, backend de alto rendimiento y aplicaciones web y móviles en producción. React, Next.js, Node.js, React Native y TypeScript.",
     "ctaProjects": "Ver Proyectos",
     "ctaContact": "Contactar",
     "scrollDown": "Desplazarse hacia abajo"
   },
   "about": {
     "title": "Sobre mí",
-    "subtitle": "Un poco sobre quién soy",
-    "bio1": "Soy desarrollador de software FullStack con alrededor de cuatro años de experiencia creando aplicaciones web y móviles. Me gusta construir sistemas escalables y transformar ideas en productos reales.",
-    "bio2": "Actualmente estoy cursando Ingeniería en Sistemas de Información en la Universidad Tecnológica Nacional (UTN) mientras desarrollo proyectos profesionales y personales enfocados en tecnologías web modernas y aplicaciones móviles.",
+    "subtitle": "Perfil y trayectoria",
+    "bio1": "Soy Ingeniero de Software Full Stack con experiencia desarrollando y escalando aplicaciones web y móviles en producción utilizando React, Next.js, Node.js, React Native y TypeScript. Me apasiona la arquitectura de software, el diseño backend y la construcción de sistemas robustos, optimizados y mantenibles.",
+    "bio2": "Cuento con experiencia llevando productos desde la idea inicial hasta producción: tomando decisiones de arquitectura, aplicando patrones de diseño, integrando servicios de IA y pasarelas de pago, y optimizando infraestructura. Actualmente curso Ingeniería en Sistemas de Información en la Universidad Tecnológica Nacional (UTN).",
     "location": "Mendoza, Argentina",
     "experience": "4+ Años de Experiencia",
     "available": "Abierto a Oportunidades",
     "labelLocation": "Ubicación",
     "labelExperience": "Experiencia",
     "labelStatus": "Estado",
-    "yearsShort": "anos"
+    "yearsShort": "años"
   },
   "skills": {
-    "title": "Habilidades",
-    "subtitle": "Tecnologías con las que trabajo",
-    "backend": "Backend",
-    "frontend": "Frontend",
-    "databases": "Bases de Datos",
-    "devops": "DevOps & Herramientas"
+    "title": "Habilidades Técnicas",
+    "subtitle": "Stack & Tecnologías",
+    "backend": "Backend & APIs",
+    "frontend": "Frontend & Mobile",
+    "databases": "Bases de Datos & Caché",
+    "devops": "Cloud, DevOps & Infra",
+    "architecture": "Arquitectura & Software Engineering",
+    "languages": "Lenguajes"
+  },
+  "experience": {
+    "title": "Experiencia Profesional",
+    "subtitle": "Trayectoria & Roles",
+    "educationTitle": "Educación & Formación",
+    "present": "Presente",
+    "viewSite": "Sitio web",
+    "trainingymRole": "Desarrollador Web Fullstack",
+    "trainingymCompany": "TRAININGYM",
+    "trainingymPeriod": "03/2026 - Presente",
+    "trainingymDesc": "Refactorización de base de datos normalizada, optimización de queries masivas, resolución de latencia en Railway y sistema de reversión de pagos con snapshots para más de 1.000 usuarios.",
+    "activarRole": "Lead Software Engineer",
+    "activarCompany": "ACTIV-AR",
+    "activarPeriod": "09/2025 - Presente",
+    "activarDesc": "Liderazgo técnico de app móvil (React Native/Expo), integración multi-proveedor de IA (Adapter/Strategy), sincronización biométrica con Health Connect / Apple Health y pipelines Docker CI/CD.",
+    "turnarRole": "Technical Founder & Software Engineer",
+    "turnarCompany": "TURNAR",
+    "turnarPeriod": "01/2026 - Presente",
+    "turnarDesc": "SaaS de gestión de turnos y pagos (Next.js, Node.js API desacoplada, PostgreSQL). Feature-based Architecture, checkout Mercado Pago y automatización por WhatsApp.",
+    "merovingianRole": "Data Engineer (Pasante)",
+    "merovingianCompany": "MEROVINGIAN DATA",
+    "merovingianPeriod": "09/2025 - 12/2025",
+    "merovingianDesc": "Pasantía en Data Engineering y Business Analysis con Python, Pandas y SQL sobre datasets de Airbnb, y modelado de datos en Power BI.",
+    "utnDegree": "Ingeniería en Sistemas de Información (4º/5º Año)",
+    "utnInstitution": "Universidad Tecnológica Nacional (UTN)",
+    "utnPeriod": "03/2023 - Presente",
+    "utnDesc": "Especialización en Diseño de Sistemas, Sistemas Operativos, Redes de Datos y Arquitectura de Bases de Datos."
   },
   "projects": {
     "title": "Proyectos",
-    "subtitle": "Software que he desarrollado",
+    "subtitle": "Software y productos destacados",
     "featured": "Proyectos Destacados",
     "viewAll": "Ver Todos los Proyectos",
     "viewProject": "Ver Proyecto",
     "github": "GitHub",
-    "liveDemo": "Demo",
+    "liveDemo": "Visitar Sitio / Demo",
+    "noDemo": "Sin demo pública",
     "technologies": "Tecnologías",
     "backToProjects": "Volver a Proyectos",
-    "noProjects": "No se encontraron proyectos.",
-    "gallery": "Galería"
+    "noProjects": "No se encontraron proyectos en esta categoría.",
+    "gallery": "Galería de Capturas",
+    "role": "Rol",
+    "year": "Año / Periodo",
+    "category": "Categoría",
+    "overview": "Descripción General",
+    "keyFeatures": "Aspectos Clave & Arquitectura",
+    "allFilter": "Todos",
+    "mobileAiFilter": "Mobile & IA",
+    "saasFullstackFilter": "Full Stack & SaaS",
+    "webApiFilter": "Web & APIs",
+    "totalCount": "proyectos en producción, SaaS y código abierto"
+  },
+  "projectItems": {
+    "activ-ar": {
+      "title": "ACTIV-AR",
+      "shortDescription": "Aplicación móvil en producción con IA para salud corporativa, hábitos saludables y análisis biométrico.",
+      "description": "Lead Software Engineer en ACTIV-AR, una plataforma de salud laboral y bienestar corporativo con IA. Diseñé y desarrollé la app móvil cross-platform en producción para Android e iOS con React Native y TypeScript. Implementé una capa desacoplada para múltiples proveedores de IA usando los patrones Adapter y Strategy, generación de entrenamientos personalizados basados en datos biométricos, análisis nutricional con procesamiento de imágenes, e integración nativa con pose detection, Health Connect y Apple Health. Gestión integral de entornos Docker y pipelines de CI/CD para producción.",
+      "role": "Lead Software Engineer",
+      "status": "En Producción",
+      "category": "Mobile & IA",
+      "keyHighlights": [
+        "Capa de integración multi-proveedor de IA mediante patrones Adapter y Strategy",
+        "Generación personalizada de programas de entrenamiento según hábitos y biometría",
+        "Reconocimiento nutricional de alimentos mediante visión artificial e IA",
+        "Sincronización nativa con Apple Health, Google Health Connect y pose detection por cámara",
+        "Despliegues automatizados con Docker y CI/CD hacia App Store y Google Play"
+      ]
+    },
+    "turnar": {
+      "title": "Turnar",
+      "shortDescription": "Plataforma SaaS de gestión de turnos, agenda y cobros con arquitectura desacoplada y automatizaciones.",
+      "description": "Technical Founder & Software Engineer en Turnar. Plataforma SaaS de gestión de turnos desarrollada desde cero con Next.js, Node.js, PostgreSQL y TypeScript. Lideré la evolución de la arquitectura migrando hacia una API desacoplada en Node.js con Feature-based Architecture para maximizar la mantenibilidad y el rendimiento. Integración de procesamiento de pagos con Mercado Pago, automatizaciones de WhatsApp para recordatorios, y arquitectura modular lista para capacidades de IA. Administración de infraestructura y base de datos en producción.",
+      "role": "Technical Founder & Software Engineer",
+      "status": "En Producción",
+      "category": "Full Stack & SaaS",
+      "keyHighlights": [
+        "Arquitectura desacoplada: Frontend en Next.js y API escalable en Node.js",
+        "Feature-based Architecture para máxima modularidad y bajo acoplamiento",
+        "Integración completa con checkout de Mercado Pago para señas y pagos online",
+        "Automatización de notificaciones y recordatorios directos vía WhatsApp",
+        "Infraestructura cloud con PostgreSQL, monitoreo continuo y base modular para IA"
+      ]
+    },
+    "cenumen": {
+      "title": "Cenumen Website",
+      "shortDescription": "Sitio oficial de evento nacional con venta de entradas, validación QR y mapa interactivo de stands.",
+      "description": "Desarrollo del sitio oficial para Cenumen, institución de numismática y coleccionismo en Mendoza. Plataforma integral para la gestión y venta de entradas del mayor evento nacional de coleccionismo 2025. Incluye pasarela de pagos con Mercado Pago, validación en tiempo real de entradas con QR, mapa interactivo de stands para expositores y panel administrativo. Desarrollo full stack, seguridad, despliegue y administración de dominio.",
+      "role": "Full Stack Developer",
+      "status": "Evento Realizado",
+      "category": "Web & APIs",
+      "keyHighlights": [
+        "Venta y acreditación de entradas online mediante Mercado Pago",
+        "Generación y escaneo en tiempo real de tickets con códigos QR únicos",
+        "Mapa interactivo para selección y reserva de stands de expositores",
+        "Panel administrativo para validación de transferencias y control de aforo"
+      ]
+    },
+    "ubuntu-platform": {
+      "title": "Ubuntu Platform",
+      "shortDescription": "Plataforma que conecta inversores de impacto con emprendimientos ecológicos sostenibles.",
+      "description": "Plataforma orientada a conectar inversores con emprendedores sustentables. Como Lead Frontend Developer coordiné un equipo de tres desarrolladores bajo metodología Scrum con sprints iterativos. Desarrollado con React, Tailwind CSS e integraciones con backend Java / Spring Boot y optimización de assets con Cloudinary.",
+      "role": "Lead Frontend Developer",
+      "status": "Bootcamp Project",
+      "category": "Web & APIs",
+      "keyHighlights": [
+        "Liderazgo de equipo frontend de 3 desarrolladores bajo marco Scrum",
+        "Diseño e implementación de interfaz moderna y accesible con React y Tailwind CSS",
+        "Consumo de APIs REST desarrolladas en Java y Spring Boot",
+        "Gestión y optimización de recursos multimedia con Cloudinary"
+      ]
+    }
   },
   "contact": {
     "title": "Contacto",
-    "subtitle": "Siempre estoy abierto a nuevas oportunidades, colaboraciones o proyectos interesantes.",
-    "tagline": "Hablemos de tu proximo proyecto",
-    "availability": "Disponible para oportunidades remotas y proyectos freelance de alto impacto.",
+    "subtitle": "Siempre estoy abierto a conversar sobre nuevas oportunidades, colaboraciones o desafíos de arquitectura y desarrollo.",
+    "tagline": "Hablemos de tu próximo proyecto",
+    "availability": "Disponible para posiciones Full Stack / Backend, liderazgo técnico y proyectos de alto impacto.",
     "email": "Correo",
     "copyEmail": "Copiar email",
     "copied": "Copiado",
-    "emailDescription": "Canal principal para propuestas y colaboraciones.",
+    "emailDescription": "Canal directo para propuestas laborales y colaboraciones.",
     "emailCta": "Escribirme",
     "github": "GitHub",
-    "githubDescription": "Codigo abierto, experimentos y repositorios activos.",
+    "githubDescription": "Código abierto, repositorios y proyectos activos.",
     "githubCta": "Ver perfil",
     "linkedin": "LinkedIn",
-    "linkedinDescription": "Experiencia profesional, networking y trayectoria.",
+    "linkedinDescription": "Perfil profesional, trayectoria y red de contactos.",
     "linkedinCta": "Conectar",
     "sendEmail": "Enviar correo"
   },
@@ -73,15 +175,15 @@
     "rights": "Todos los derechos reservados.",
     "madeWith": "Hecho con",
     "availableForWork": "Disponible para trabajar",
-    "navigation": "Navegacion",
+    "navigation": "Navegación",
     "connect": "Contacto",
     "builtWith": "Construido con",
     "deployedOnVercel": "Desplegado en Vercel"
   },
   "meta": {
-    "homeTitle": "Luciano Romero — Desarrollador FullStack",
-    "homeDescription": "Portafolio de Luciano Romero, desarrollador FullStack especializado en desarrollo web y mobile con React, React Native, Node.js y Next.js.",
+    "homeTitle": "Luciano Romero — Full Stack Software Engineer",
+    "homeDescription": "Portafolio de Luciano Romero, Full Stack Software Engineer especializado en React, Next.js, Node.js, React Native, TypeScript y arquitecturas escalables.",
     "projectsTitle": "Proyectos — Luciano Romero",
-    "projectsDescription": "Explora los proyectos de software desarrollados por Luciano Romero, incluyendo aplicaciones móviles, plataformas web y sistemas fullstack."
+    "projectsDescription": "Explora los proyectos de software desarrollados por Luciano Romero, incluyendo aplicaciones móviles, plataformas SaaS y sistemas backend."
   }
 }

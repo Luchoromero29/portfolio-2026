@@ -9,10 +9,11 @@ export interface Props {
 const { lang, currentPath } = Astro.props;
 
 const navLinks = [
-  { key: "nav.home",     href: "/",        label: lang === "es" ? "Inicio"    : "Home" },
-  { key: "nav.projects", href: "/projects", label: lang === "es" ? "Proyectos" : "Projects" },
-  { key: "nav.about",    href: "/#about",   label: lang === "es" ? "Sobre mí"  : "About" },
-  { key: "nav.contact",  href: "/#contact", label: lang === "es" ? "Contacto"  : "Contact" },
+  { key: "nav.home",       href: "/",           label: lang === "es" ? "Inicio"      : "Home" },
+  { key: "nav.experience", href: "/#experience", label: lang === "es" ? "Experiencia" : "Experience" },
+  { key: "nav.projects",   href: "/projects",    label: lang === "es" ? "Proyectos"   : "Projects" },
+  { key: "nav.about",      href: "/#about",      label: lang === "es" ? "Sobre mí"    : "About" },
+  { key: "nav.contact",    href: "/#contact",    label: lang === "es" ? "Contacto"    : "Contact" },
 ];
 
 function isActive(href: string) {

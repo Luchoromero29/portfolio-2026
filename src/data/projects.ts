@@ -1,6 +1,11 @@
 export interface Project {
   title: string;
   slug: string;
+  category: "mobile-ai" | "saas-fullstack" | "web-api";
+  categoryKey: string;
+  roleKey: string;
+  statusKey: string;
+  year: string;
   shortDescription: string;
   description: string;
   technologies: string[];
@@ -15,75 +20,99 @@ export const projects: Project[] = [
   {
     title: "ACTIV-AR",
     slug: "activ-ar",
+    category: "mobile-ai",
+    categoryKey: "projectItems.activ-ar.category",
+    roleKey: "projectItems.activ-ar.role",
+    statusKey: "projectItems.activ-ar.status",
+    year: "2025 - Presente",
     shortDescription:
-      "Aplicacion mobile con IA que promueve habitos saludables y pausas activas en el trabajo.",
+      "Aplicación móvil en producción con IA para salud corporativa, hábitos saludables y análisis biométrico.",
     description:
-      "ACTIV-AR es una aplicacion mobile inteligente disenada para mejorar el bienestar fisico y mental en entornos laborales mediante pausas activas y habitos saludables. La app fue desarrollada como una solucion cross-platform para iOS y Android usando React Native y TypeScript. Como unico desarrollador del proyecto, fui responsable de todo el ciclo de desarrollo: arquitectura del sistema, backend con Node.js y Sequelize, gestion de base de datos con MySQL, integracion de funcionalidades con IA y despliegue en Google Play Store y Apple App Store.",
+      "Lead Software Engineer en ACTIV-AR, una plataforma de salud laboral y bienestar corporativo con IA. Diseñé y desarrollé la app móvil cross-platform en producción para Android e iOS con React Native y TypeScript. Implementé una capa desacoplada para múltiples proveedores de IA usando los patrones Adapter y Strategy, generación de entrenamientos personalizados basados en datos biométricos, análisis nutricional con procesamiento de imágenes, e integración nativa con pose detection, Health Connect y Apple Health. Gestión integral de entornos Docker y pipelines de CI/CD para producción.",
     technologies: [
       "React Native",
       "TypeScript",
       "Node.js",
-      "Sequelize",
-      "MySQL",
+      "AI Multi-provider",
       "Expo",
-      "REST API",
+      "Apple Health",
+      "Health Connect",
+      "Docker CI/CD",
     ],
     images: [
-      "/assets/proyect-img/activ-ar/screenshot-1.png",
-      "/assets/proyect-img/activ-ar/screenshot-2.png",
-      "/assets/proyect-img/activ-ar/screenshot-3.png",
-      "/assets/proyect-img/activ-ar/screenshot-4.png",
-      "/assets/proyect-img/activ-ar/screenshot-5.png",
-      "/assets/proyect-img/activ-ar/screenshot-6.png",
+      "/assets/proyect-img/activ-ar/landing.png",
+      "/assets/proyect-img/activ-ar/challenges.png",
+      "/assets/proyect-img/activ-ar/features.png",
+      "/assets/proyect-img/activ-ar/portada.png",
+      "/assets/proyect-img/activ-ar/2-Corporate-Fitness-Programs.png",
+      "/assets/proyect-img/activ-ar/3-Corporate-Fitness-Challenges.png",
+      "/assets/proyect-img/activ-ar/4-Corporate-Fitness-Classes.png",
+      "/assets/proyect-img/activ-ar/5-Dayly-Meal-Tracker-Nutrition.png",
+      "/assets/proyect-img/activ-ar/6-Events-and-Updates.png",
+      "/assets/proyect-img/activ-ar/7-Mindfullness.png",
+      "/assets/proyect-img/activ-ar/8-Corporate-Wellness-Programs.png",
     ],
-    thumbnail: "/assets/proyect-img/activ-ar/thumbnail.png",
+    thumbnail: "/assets/proyect-img/activ-ar/features.png",
     github: "",
-    liveDemo: "https://activ-ar.com.au/corporate-wellness-software",
+    liveDemo: "https://activ-ar.com.au",
     featured: true,
   },
 
   {
     title: "Turnar",
     slug: "turnar",
+    category: "saas-fullstack",
+    categoryKey: "projectItems.turnar.category",
+    roleKey: "projectItems.turnar.role",
+    statusKey: "projectItems.turnar.status",
+    year: "2026 - Presente",
     shortDescription:
-      "Plataforma flexible de gestion de turnos pensada para multiples rubros.",
+      "Plataforma SaaS de gestión de turnos, agenda y cobros con arquitectura desacoplada y automatizaciones.",
     description:
-      "Turnar es una plataforma web de gestion de turnos y reservas disenada con una arquitectura generica y flexible para adaptarse a distintos rubros como salud, belleza y consultoria profesional. El sistema prioriza escalabilidad y facilidad de uso, permitiendo a negocios administrar agendas, turnos y disponibilidad desde una plataforma centralizada. Actualmente se encuentra en desarrollo activo y esta construida con Next.js y Supabase.",
+      "Technical Founder & Software Engineer en Turnar. Plataforma SaaS de gestión de turnos desarrollada desde cero con Next.js, Node.js, PostgreSQL y TypeScript. Lideré la evolución de la arquitectura migrando hacia una API desacoplada en Node.js con Feature-based Architecture para maximizar la mantenibilidad y el rendimiento. Integración de procesamiento de pagos con Mercado Pago, automatizaciones de WhatsApp para recordatorios, y arquitectura modular lista para capacidades de IA. Administración de infraestructura y base de datos en producción.",
     technologies: [
       "Next.js",
-      "Supabase",
-      "TypeScript",
+      "Node.js API",
       "PostgreSQL",
+      "TypeScript",
+      "Mercado Pago API",
+      "WhatsApp Automation",
       "Tailwind CSS",
     ],
     images: [
-      "/assets/proyect-img/turnar/screenshot-1.png",
-      "/assets/proyect-img/turnar/screenshot-2.png",
-      "/assets/proyect-img/turnar/screenshot-3.png",
-      "/assets/proyect-img/turnar/screenshot-4.png",
-      "/assets/proyect-img/turnar/thumbnail.png",
+      "/assets/proyect-img/turnar/landing.png",
+      "/assets/proyect-img/turnar/reservas.png",
+      "/assets/proyect-img/turnar/servicios.png",
+      "/assets/proyect-img/turnar/caja.png",
+      "/assets/proyect-img/turnar/stats.png",
+      "/assets/proyect-img/turnar/personalizacion.png",
+      "/assets/proyect-img/turnar/recursos.png",
     ],
-    thumbnail: "/assets/proyect-img/turnar/thumbnail.png",
+    thumbnail: "/assets/proyect-img/turnar/landing.png",
     github: "",
-    liveDemo: "",
+    liveDemo: "https://turnar.ar",
     featured: true,
   },
 
   {
     title: "Cenumen Website",
     slug: "cenumen",
+    category: "web-api",
+    categoryKey: "projectItems.cenumen.category",
+    roleKey: "projectItems.cenumen.role",
+    statusKey: "projectItems.cenumen.status",
+    year: "2025",
     shortDescription:
-      "Sitio oficial de evento con venta de entradas, validacion QR y mapa interactivo de stands.",
+      "Sitio oficial de evento nacional con venta de entradas, validación QR y mapa interactivo de stands.",
     description:
-      "Desarrollo del sitio oficial para Cenumen, una institucion de numismatica y coleccionismo en Mendoza. La plataforma fue creada para gestionar la venta de entradas del evento de coleccionistas mas importante del pais en 2025. El sistema incluye pagos online con Mercado Pago, verificacion manual de transferencias bancarias, generacion y validacion en tiempo real de entradas con QR, y un mapa interactivo donde los expositores podian elegir y comprar sus espacios de stand. Fui responsable del desarrollo full stack, implementacion de APIs, configuracion de seguridad, despliegue y dominio.",
+      "Desarrollo del sitio oficial para Cenumen, institución de numismática y coleccionismo en Mendoza. Plataforma integral para la gestión y venta de entradas del mayor evento nacional de coleccionismo 2025. Incluye pasarela de pagos con Mercado Pago, validación en tiempo real de entradas con QR, mapa interactivo de stands para expositores y panel administrativo. Desarrollo full stack, seguridad, despliegue y administración de dominio.",
     technologies: [
       "Node.js",
       "JavaScript",
       "MySQL",
       "Mercado Pago API",
-      "QR Code",
-      "HTML",
-      "CSS",
+      "QR Validation",
+      "Interactive Map",
     ],
     images: [
       "/assets/proyect-img/cenumen/screenshot-1.png",
@@ -99,21 +128,27 @@ export const projects: Project[] = [
   {
     title: "Ubuntu Platform",
     slug: "ubuntu-platform",
+    category: "web-api",
+    categoryKey: "projectItems.ubuntu-platform.category",
+    roleKey: "projectItems.ubuntu-platform.role",
+    statusKey: "projectItems.ubuntu-platform.status",
+    year: "2024",
     shortDescription:
-      "Plataforma que conecta inversores con emprendedores de impacto ecologico.",
+      "Plataforma que conecta inversores de impacto con emprendimientos ecológicos sostenibles.",
     description:
-      "Ubuntu es una plataforma desarrollada durante un proyecto de bootcamp enfocada en conectar inversores con emprendedores orientados al cuidado del ambiente. Trabaje como Lead Frontend Developer, coordinando un equipo de tres desarrolladores bajo metodologia Scrum con sprints de dos semanas. El frontend se desarrollo con React y Tailwind CSS e integrado con un backend en Java con Spring Boot. Fui responsable de estructurar la arquitectura frontend, implementar integraciones con APIs y optimizar el rendimiento de la UI con herramientas como Cloudinary para imagenes.",
+      "Plataforma orientada a conectar inversores con emprendedores sustentables. Como Lead Frontend Developer coordiné un equipo de tres desarrolladores bajo metodología Scrum con sprints iterativos. Desarrollado con React, Tailwind CSS e integraciones con backend Java / Spring Boot y optimización de assets con Cloudinary.",
     technologies: [
       "React",
       "JavaScript",
       "Tailwind CSS",
       "Cloudinary",
-      "REST API",
-      "Spring Boot",
+      "Java / Spring Boot",
+      "Scrum",
     ],
     images: [
       "/assets/proyect-img/ubuntu/screenshot-1.png",
       "/assets/proyect-img/ubuntu/screenshot-2.png",
+      "/assets/proyect-img/ubuntu/screenshot-3.png",
     ],
     thumbnail: "/assets/proyect-img/ubuntu/screenshot-1.png",
     github: "",

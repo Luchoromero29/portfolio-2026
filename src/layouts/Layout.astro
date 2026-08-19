@@ -17,16 +17,28 @@ export interface Props {
 
 const {
   title,
-  description = "Portafolio de Luciano Romero, desarrollador FullStack.",
+  description = "Portafolio de Luciano Romero, Full Stack Software Engineer.",
   ogImage = "/assets/logo-lr.png",
   ogImageAlt = "Luciano Romero Portfolio",
   ogType = "website",
   robots = "index, follow, max-image-preview:large",
-  keywords = ["Luciano Romero", "FullStack", "Portfolio", "React", "Node.js", "TypeScript"],
+  keywords = [
+    "Luciano Romero",
+    "Full Stack Software Engineer",
+    "Software Architecture",
+    "Backend Developer",
+    "React",
+    "Next.js",
+    "Node.js",
+    "React Native",
+    "TypeScript",
+    "PostgreSQL",
+    "Portfolio",
+  ],
   lang = "es",
 } = Astro.props;
 
-const siteURL = Astro.site ?? new URL("https://lucianoromero.dev");
+const siteURL = Astro.site ?? new URL("https://lucianoromero.vercel.app");
 const canonicalURL = new URL(Astro.url.pathname, siteURL);
 const ogImageURL = new URL(ogImage, siteURL);
 const locale = lang === "es" ? "es_AR" : "en_US";
